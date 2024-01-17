@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import $ from "jquery"
 import '../styles/FileSystem.css'
 
@@ -6,11 +6,13 @@ import '../styles/FileSystem.css'
 function FileSystem() {
 
     const [active, setActive] = useState(false);
+    
+    const [file, setFile] = useState([])
+
     const fileBtn = () => {
         setActive(!active);
     }
 
-    const [result, setResult] = useState("");
     const createNew = (e) => {
         e.preventDefault();
         const form = $(e.target);
@@ -18,10 +20,19 @@ function FileSystem() {
             type: "POST",
             url: form.attr("action"),
             data: form.serialize(),
-            success(data) {
-                setResult(data);
-            }
+            
         });
+    }
+
+    useEffect(()=>{
+        fetchD();
+    },[])
+
+    const fetchD = async () => {
+        const file = await fetch('http://localhost:8000/getData.php');
+        const response = await file.json();
+
+        setFile(response.data);
     }
 
   return (
@@ -40,6 +51,14 @@ function FileSystem() {
 
         <div className='fileContainer'>
             <ol className='files'>
+
+                {file.map((item) => {
+                    
+                    return <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li className='file'>{item.name}</li></button>
+                    
+                })}
+
+
                 <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li><div className='folder'/>Folder1</li></button>
                 <li className='folder'>Folder2</li>
                 <li className='folder'>Folder3</li>

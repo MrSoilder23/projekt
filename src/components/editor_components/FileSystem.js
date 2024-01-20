@@ -37,6 +37,7 @@ function FileSystem() {
     }
 
     const createFileBtn = () => {
+        alert(disabled);
         setDisabled(true);
         setTimeout(() => {
             setDisabled(false);

@@ -1,11 +1,23 @@
-import React from 'react'
+import React, {useState} from 'react'
 import '../styles/Document.css'
 
 function Document() {
+
+    const [file, setFile] = useState([])
+
+    const fetchD = async () => {
+        const file = await fetch('http://localhost:8000/getFile.php');
+        const response = await file.json();
+
+        setFile(response.data);
+    }
+    
   return (
     <div className='document'>
         <div className='info'>
-            <h1>Dokument</h1>
+            <form method='post' action='http://localhost:8000/getFile.php'>
+                <input type='text' className='documentName' name="name" onChange={fetchD} placeholder="File" defaultValue={"aaa"} />
+            </form>
             <div className='underLine'></div>
 
             <div className='data'>
@@ -21,11 +33,12 @@ function Document() {
                 </div>
             </div>
         </div>
-        <div className='text' contentEditable="true">
-            <h2>Borys to gicior</h2>
-            <h3>Lorem Ipsum is simply dummy text of the printing and typesetting</h3>
+        <div className='textContainer'>
+            <div className='text' contentEditable="true">
+                <h2>Borys to gicior</h2>
+                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting</h3>
+            </div>
         </div>
-        
     </div>
   )
 }

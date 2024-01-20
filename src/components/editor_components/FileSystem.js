@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import $ from "jquery"
 import '../styles/FileSystem.css'
+import Button from '../Button.js';
 
 
 function FileSystem() {
 
     const [active, setActive] = useState(false);
-    
     const [file, setFile] = useState([])
+    const [disabled, setDisabled] = useState(false);
 
     const fileBtn = () => {
         setActive(!active);
@@ -35,12 +36,20 @@ function FileSystem() {
         setFile(response.data);
     }
 
+    const createFileBtn = () => {
+        setDisabled(true);
+        setTimeout(() => {
+            setDisabled(false);
+        }, 1000);
+        
+    }
+
   return (
     <div className='fileSystem'>
         <div className='fileNavbar'>
             <ol>
                 <form action='http://localhost:8000/server.php' method='post' onSubmit={(event) => createNew(event)}>
-                    <button className='fileBtn' type='submit' name='save'><li></li></button>
+                    <button className='fileBtn' type='submit' name='save' onClick={createFileBtn} disabled={disabled}><li></li></button>
                 </form>
                 
                 <button className='fileBtn'><li>a</li></button>
@@ -54,11 +63,11 @@ function FileSystem() {
 
                 {file.map((item) => {
                     
-                    return <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li className='file'>{item.name}</li></button>
+                    return <li className='file'><Button type="list" text={item.name} onClick={fileBtn}/></li>
                     
                 })}
 
-
+                
                 <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li><div className='folder'/>Folder1</li></button>
                 <li className='folder'>Folder2</li>
                 <li className='folder'>Folder3</li>

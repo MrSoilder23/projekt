@@ -11,18 +11,19 @@
 
 .App {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 
   height: 100vh;
   background-color: #F5F5F5;
 }
 
-ol {
-  list-style-type: none;
+.modules {
+  display: flex;
+  flex-direction: row;
+
+  height: 100%;
 }
 
-button {
-  border: none;
-  text-decoration: none;
-  width: 100%;
+ol {
+  list-style-type: none;
 }

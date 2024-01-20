@@ -68,8 +68,9 @@ function FileSystem() {
                     
                 })}
 
-                
+                {/*
                 <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li><div className='folder'/>Folder1</li></button>
+                
                 <li className='folder'>Folder2</li>
                 <li className='folder'>Folder3</li>
 
@@ -77,11 +78,14 @@ function FileSystem() {
                 <li className='file'>Dokument2</li>
                 <li className='file'>Dokument3</li>
                 <li className='file'>Dokument4</li>
+                */}
             </ol>
             <div className={active ? "folderAct" : "folderUnAct"} >
                 <ol className="folders">
+                    {/*
                     <li className='file'>Plik1</li>
                     <li className='file'>Plik1</li>
+                    */}
                 </ol>
             </div>
         </div>

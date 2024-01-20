@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import '../styles/Document.css'
 
-function Document() {
+function Document({id}) {
 
     const [file, setFile] = useState([])
 
@@ -15,7 +15,7 @@ function Document() {
   return (
     <div className='document'>
         <div className='info'>
-            <form method='post' action='http://localhost:8000/getFile.php'>
+            <form method='post' action='http://localhost:8000/getFile.php' autoComplete='false' >
                 <input type='text' className='documentName' name="name" onChange={fetchD} placeholder="File" defaultValue={"aaa"} />
             </form>
             <div className='underLine'></div>

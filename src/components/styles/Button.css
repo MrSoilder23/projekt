@@ -1,16 +1,21 @@
 button {
     border: none;
     text-decoration: none;
+    text-align: left;
+    font-weight: 600;
 }
 
 button.list {
-    width: 100%;
+    padding: 10px 40px 10px 15px;
+    min-width: 150px;
+
+    background-color: transparent;
 }
 .unActBtn {
     background-color: #E5E4E2;
     transition: 0.2s;
 }
-.unActBtn:hover {
+button:hover {
     background-color: rgba(28, 27, 33, 0.05);
     
 }

@@ -8,7 +8,7 @@ function TextEditor() {
   return (
     <div className='textEditorPage'>
         <FileSystem />
-        <Document />
+        
     </div>
   )
 }

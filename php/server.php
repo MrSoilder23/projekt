@@ -3,10 +3,11 @@
     include('start.php');
     
     $id = getdate();
-    $date = date("Y/m/d");
+    $date = date("Y.m.d");
+    $hour = date("H:i");
 
     $sql_query = "INSERT INTO files (id,name,date,type) VALUES ('$id[0]','File','$date','file'); 
-                  INSERT INTO file (id, name, date) VALUES ('$id[0]','File','$date');";
+                  INSERT INTO file (id, name, date, hour) VALUES ('$id[0]','File','$date','$hour');";
 
     
     if (mysqli_multi_query($conn, $sql_query)) {

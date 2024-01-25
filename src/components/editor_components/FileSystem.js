@@ -6,12 +6,22 @@ import Button from '../Button.js';
 
 function FileSystem() {
 
-    const [active, setActive] = useState(false);
-    const [file, setFile] = useState([])
+    const [active, setActive] = useState({
+        activeObject: null,
+    });
+
+    const [file, setFile] = useState([]);
     const [disabled, setDisabled] = useState(false);
 
-    const fileBtn = () => {
-        setActive(!active);
+    function toggleActive(index) {
+        setActive({...active, activeObject: ("id: "+index)});
+    }
+    function toggleActiveStyle(index) {
+        if(("id: "+index) === active.activeObject) {
+            return "list actBtn";
+        } else {
+            return "list unActBtn";
+        }
     }
 
     const createNew = (e) => {
@@ -50,7 +60,7 @@ function FileSystem() {
         <div className='fileNavbar'>
             <ol>
                 <form action='http://localhost:8000/server.php' method='post' onSubmit={(event) => createNew(event)}>
-                    <button className='fileBtn' type='submit' name='save' onClick={createFileBtn} disabled={disabled}><li></li></button>
+                    <button className='fileBtn' type='submit' name='save' onClick={createFileBtn}><li></li></button>
                 </form>
                 
                 <button className='fileBtn'><li>a</li></button>
@@ -63,9 +73,7 @@ function FileSystem() {
             <ol className='files'>
 
                 {file.map((item) => {
-                    
-                    return <li className='file'><Button type="list" text={item.name} onClick={fileBtn}/></li>
-                    
+                    return <li className='file'><Button key={"id: "+item.id} className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/></li>
                 })}
 
                 {/*
@@ -80,7 +88,7 @@ function FileSystem() {
                 <li className='file'>Dokument4</li>
                 */}
             </ol>
-            <div className={active ? "folderAct" : "folderUnAct"} >
+            <div className={active ? "folderAct" : "folderUnAct"}>
                 <ol className="folders">
                     {/*
                     <li className='file'>Plik1</li>

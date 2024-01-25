@@ -70,6 +70,10 @@
     border: none;
     outline: 0 solid transparent;
 }
+.id {
+    display: none;
+}
+
 h2 {
     font-size: 36px;
     font-weight: 800;

@@ -2,19 +2,14 @@ import React, {useState} from 'react';
 import "./styles/Button.css";
 
 function Button({
-  type,
+  className,
   onClick,
-  text
+  text,
+  key
   }) {
 
-    const [active, setActive] = useState(false);
-    
-    const fileBtn = () => {
-      setActive(!active);
-  }
-
   return (
-    <button className={type} onClick={onClick}>{text}</button>
+    <button key={key} className={className} onClick={onClick}>{text}</button>
   )
 }
 

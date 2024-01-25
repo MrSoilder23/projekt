@@ -1,35 +1,48 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import '../styles/Document.css'
 
-function Document({id}) {
+function Document(id) {
 
-    const [file, setFile] = useState([])
+    const [file, setFile] = useState([]);
 
-    const fetchD = async () => {
-        const file = await fetch('http://localhost:8000/getFile.php');
+    useEffect(()=>{
+        fetchFile();
+    },[])
+    
+    const fetchFile = async () => {
+        const file = await fetch('http://localhost:8000/getFile.php', {method: "POST", body: {
+            'Id': id,
+        }});
         const response = await file.json();
 
         setFile(response.data);
     }
+
     
   return (
     <div className='document'>
+
         <div className='info'>
-            <form method='post' action='http://localhost:8000/getFile.php' autoComplete='false' >
-                <input type='text' className='documentName' name="name" onChange={fetchD} placeholder="File" defaultValue={"aaa"} />
+            <form method='post' action='http://localhost:8000/editFile.php' autoComplete='false' >
+                {file.map((item) => { 
+                    return <input type='text' className='documentName' name="name" onChange={fetchFile} placeholder="File" defaultValue={item.name} />
+                })}
             </form>
             <div className='underLine'></div>
 
-            <div className='data'>
-                <div className='date'><h4>20.01.2024</h4></div>
-                <div className='hour'><h4>20:01</h4></div>
-            </div>
+            {file.map((item) => { 
+                return <div className='data'>
+                    <div className='date'><h4>{item.date}</h4></div>
+                    <div className='hour'><h4>{item.hour}</h4></div>
+                </div>
+            })}
+
 
             <div className='tagContainer'>
                 <div className='tags'>
-                    <h4>#tag1,</h4>
-                    <h4>#tag2,</h4>
-                    <h4>#tag3</h4>
+                {file.map((item) => { 
+                    return <h4>{item.tags}</h4>
+                })}
                 </div>
             </div>
         </div>

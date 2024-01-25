@@ -19,4 +19,5 @@
     
     echo json_encode($response);
 
+    $conn -> close();
 ?>

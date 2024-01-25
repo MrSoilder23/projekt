@@ -15,4 +15,5 @@
     } else {
         echo "Error: ". $sql . mysqli_error($conn);
     }
+    $conn -> close();
 ?>

@@ -22,7 +22,7 @@ function Document({inputId}) {
     <div className='document'>
 
         <div className='info'>
-            <form method='post' action='http://localhost:8000/editFile.php' autoComplete='false' >
+            <form method='post' action={'http://localhost:8000/editFile.php?$id='+inputId} autoComplete='false' >
             {file.map((item) => { 
                 return  <input key={item.id} type='text' className='documentName' name="name" onChange={fetchFile} placeholder="File" defaultValue={item.name} />
             })}

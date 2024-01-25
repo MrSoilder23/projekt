@@ -19,7 +19,7 @@ button:hover {
     background-color: rgba(28, 27, 33, 0.05);
     
 }
-.actBtn {
+button.list.actBtn {
     background-color: rgba(28, 27, 33, 0.05);
 
     border-left: 2px solid #474554;

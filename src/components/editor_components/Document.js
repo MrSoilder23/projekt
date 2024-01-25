@@ -1,32 +1,31 @@
 import React, { useState, useEffect } from 'react'
 import '../styles/Document.css'
 
-function Document(id) {
+function Document({inputId}) {
 
     const [file, setFile] = useState([]);
 
     useEffect(()=>{
         fetchFile();
-    },[])
-    
+    },[inputId])
+
+
     const fetchFile = async () => {
-        const file = await fetch('http://localhost:8000/getFile.php', {method: "POST", body: {
-            'Id': id,
-        }});
+        const file = await fetch('http://localhost:8000/getFile.php?id='+inputId);
         const response = await file.json();
 
         setFile(response.data);
     }
 
-    
+
   return (
     <div className='document'>
 
         <div className='info'>
             <form method='post' action='http://localhost:8000/editFile.php' autoComplete='false' >
-                {file.map((item) => { 
-                    return <input type='text' className='documentName' name="name" onChange={fetchFile} placeholder="File" defaultValue={item.name} />
-                })}
+            {file.map((item) => { 
+                return  <input key={item.id} type='text' className='documentName' name="name" onChange={fetchFile} placeholder="File" defaultValue={item.name} />
+            })}
             </form>
             <div className='underLine'></div>
 

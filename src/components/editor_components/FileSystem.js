@@ -4,7 +4,7 @@ import '../styles/FileSystem.css'
 import Button from '../Button.js';
 
 
-function FileSystem() {
+function FileSystem({documentId}) {
 
     const [active, setActive] = useState({
         activeObject: null,
@@ -15,6 +15,7 @@ function FileSystem() {
 
     function toggleActive(index) {
         setActive({...active, activeObject: ("id: "+index)});
+        documentId(index);
     }
     function toggleActiveStyle(index) {
         if(("id: "+index) === active.activeObject) {
@@ -47,12 +48,11 @@ function FileSystem() {
     }
 
     const createFileBtn = () => {
-        alert(disabled);
         setDisabled(true);
+
         setTimeout(() => {
             setDisabled(false);
         }, 1000);
-        
     }
 
   return (

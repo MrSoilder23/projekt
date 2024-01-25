@@ -2,8 +2,8 @@
 
     include('start.php');
 
-    if(isset($_POST['Id'])) {
-        $id = $_POST['Id'];
+    if(isset($_GET['id'])) {
+        $id = $_GET['id'];
 
     $sql_query = "SELECT 
         id, 

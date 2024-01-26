@@ -2,13 +2,22 @@
     display: flex;
     flex-direction: column;
 
-    margin-top: 20px;
+    padding-top: 20px;
     margin-left: 40px;
 
     width: 100%;
     
-
     overflow-y: scroll;
+
+    -ms-overflow-style:none;
+    scrollbar-width: 3px;
+}
+.document::-webkit-scrollbar {
+    width: 4px;
+}
+.document::-webkit-scrollbar-thumb {
+    background: #474554;
+    border-radius: 3px;
 }
 
 .info {

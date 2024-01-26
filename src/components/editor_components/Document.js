@@ -2,21 +2,22 @@ import React, { useState, useEffect } from 'react'
 import $ from "jquery"
 import '../styles/Document.css'
 
-function Document({inputId}) {
+function Document({inputId, updateFiles}) {
 
     const [file, setFile] = useState([]);
     const [fileName, setFileName] = useState('');
 
     useEffect(()=>{
         fetchFile();
-    },[inputId])
+    },[inputId, updateFiles])
 
     useEffect(() => {
         const delaySendData = setTimeout(() => {
             updateName();
-        },3000)
-
-        return () => clearTimeout(delaySendData)
+            updateFiles(fileName);
+        },4000)
+        
+        return () => clearTimeout(delaySendData);
     },[fileName] )
 
     const fetchFile = async () => {
@@ -26,7 +27,7 @@ function Document({inputId}) {
         setFile(response.data);
     }
 
-    const updateName = (e) => {
+    const updateName = () => {
         const form = $(document.getElementById('form'));
         
         $.ajax({
@@ -34,7 +35,7 @@ function Document({inputId}) {
             url: form.attr("action"),
             data: form.serialize(),
         });
-        
+
     }
 
   return (

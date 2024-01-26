@@ -4,7 +4,7 @@ import '../styles/FileSystem.css'
 import Button from '../Button.js';
 
 
-function FileSystem({documentId}) {
+function FileSystem({documentId, receiveUpdate}) {
 
     const [active, setActive] = useState({
         activeObject: null,
@@ -38,7 +38,7 @@ function FileSystem({documentId}) {
 
     useEffect(()=>{
         fetchD();
-    },[])
+    },[receiveUpdate])
 
     const fetchD = async () => {
         const file = await fetch('http://localhost:8000/getData.php');

@@ -70,7 +70,8 @@
     border: none;
     outline: 0 solid transparent;
 }
-.id {
+
+.invis {
     display: none;
 }
 

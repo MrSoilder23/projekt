@@ -1,14 +1,23 @@
 import React, { useState, useEffect } from 'react'
+import $ from "jquery"
 import '../styles/Document.css'
 
 function Document({inputId}) {
 
     const [file, setFile] = useState([]);
+    const [fileName, setFileName] = useState('');
 
     useEffect(()=>{
         fetchFile();
     },[inputId])
 
+    useEffect(() => {
+        const delaySendData = setTimeout(() => {
+            updateName();
+        },3000)
+
+        return () => clearTimeout(delaySendData)
+    },[fileName] )
 
     const fetchFile = async () => {
         const file = await fetch('http://localhost:8000/getFile.php?id='+inputId);
@@ -17,15 +26,26 @@ function Document({inputId}) {
         setFile(response.data);
     }
 
+    const updateName = (e) => {
+        const form = $(document.getElementById('form'));
+        
+        $.ajax({
+            type: "POST",
+            url: form.attr("action"),
+            data: form.serialize(),
+        });
+        
+    }
 
   return (
     <div className='document'>
 
         <div className='info'>
-            <form method='post' action={'http://localhost:8000/editFile.php?$id='+inputId} autoComplete='false' >
-            {file.map((item) => { 
-                return  <input key={item.id} type='text' className='documentName' name="name" onChange={fetchFile} placeholder="File" defaultValue={item.name} />
-            })}
+            <form id='form' method='post' action='http://localhost:8000/editFile.php' autoComplete='false'>
+                <input className='invis' key={inputId} name='id' value={inputId}/>
+                {file.map((item) => { 
+                    return <input key={item.id} type='text' className='documentName' name="name" onChange={(e) => setFileName(e.target.value)} placeholder="File" defaultValue={item.name} />
+                })}
             </form>
             <div className='underLine'></div>
 

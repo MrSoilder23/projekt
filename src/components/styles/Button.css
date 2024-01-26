@@ -3,11 +3,14 @@ button {
     text-decoration: none;
     text-align: left;
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 button.list {
     padding: 10px 40px 10px 15px;
-    min-width: 150px;
+    width: 150px;
 
     background-color: transparent;
 }

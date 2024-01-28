@@ -1,0 +1,19 @@
+.contextMenu {
+    display: flex;
+    flex-direction: column;
+
+    border: solid 1px #D2D5DB;
+    border-radius: 10px;
+
+    background-color: #E5E4E2;
+
+    padding: 20px 15px;
+}
+
+.textTypeList {
+
+}
+
+.btnList {
+
+}

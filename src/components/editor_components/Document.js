@@ -1,9 +1,74 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import $ from "jquery"
 import '../styles/Document.css'
+import ContextMenu from '../ContextMenu';
 
 function Document({inputId, updateFiles}) {
 
+    //ContextMenu
+    const contextMenuRef = useRef(null);
+    const [contextMenu, setContextMenu] = useState({
+        position: {
+            x: 0,
+            y: 0
+        },
+        toggled: false,
+    });
+
+    function handleContextMenu(e) {
+        e.preventDefault();
+
+        const contextMenuAttr = contextMenuRef.current.getBoundingClientRect();
+
+        const isLeft = e.clientX < window?.innerWidth /2
+
+        let x
+        let y = e.clientY
+
+        if (isLeft) {
+            x = e.clientX
+        } else {
+            x = e.clientX - contextMenuAttr.width
+        }
+        
+        setContextMenu({
+            position: {
+                x,
+                y
+            },
+            toggled: true
+        })
+
+    }
+
+    function resetContextMenu() {
+        setContextMenu({
+            position: {
+                x: 0,
+                y: 0
+            },
+            toggled: false
+        })
+    }
+
+    useEffect(() => {
+        function handler(e) {
+            if(contextMenuRef.current) {
+                if(!contextMenuRef.current.contains(e.target)) {
+                    resetContextMenu()
+                }
+            }
+        }
+
+        document.addEventListener('click', handler)
+
+        return () => {
+            document.removeEventListener('click', handler)
+        }
+
+    })
+
+    //File Setup
     const [file, setFile] = useState([]);
     const [fileName, setFileName] = useState('');
 
@@ -20,6 +85,7 @@ function Document({inputId, updateFiles}) {
         return () => clearTimeout(delaySendData);
     },[fileName] )
 
+    //fetch file by sending its id
     const fetchFile = async () => {
         const file = await fetch('http://localhost:8000/getFile.php?id='+inputId);
         const response = await file.json();
@@ -27,6 +93,7 @@ function Document({inputId, updateFiles}) {
         setFile(response.data);
     }
 
+    //Update name by sending new Form
     const updateName = () => {
         const form = $(document.getElementById('form'));
         
@@ -35,11 +102,43 @@ function Document({inputId, updateFiles}) {
             url: form.attr("action"),
             data: form.serialize(),
         });
-
     }
 
   return (
-    <div className='document'>
+    <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
+
+        <ContextMenu 
+            contextMenuRef={contextMenuRef} 
+            isToggled={contextMenu.toggled} 
+            positionX={contextMenu.position.x} 
+            positionY={contextMenu.position.y} 
+            buttons={[
+            {
+                text: "Size",
+                onClick: () => alert("aa1"),
+                isSpacer: false,
+            },
+            {
+                text: "List",
+                onClick: () => alert("aa2"),
+                isSpacer: false,
+            },
+            {
+                text: "Bold",
+                onClick: () => alert("aa3"),
+                isSpacer: false,
+            },
+            {
+                text: "Italic",
+                onClick: () => alert("aa4"),
+                isSpacer: false,
+            },
+            {
+                text: "Highlight",
+                onClick: () => alert("aa5"),
+                isSpacer: false,
+            },
+        ]}/>
 
         <div className='info'>
             <form id='form' method='post' action='http://localhost:8000/editFile.php' autoComplete='false'>

@@ -2,21 +2,40 @@ import React from 'react'
 import './styles/ContextMenu.css'
 import Button from './Button'
 
-function ContextMenu({
-    editText,
-    addFiles,
-}) {
+const ContextMenu = ({
+    rightClickItem,
+    positionX,
+    positionY,
+    isToggled,
+    buttons,
+    contextMenuRef
+}) => {
   return (
-    <div className='contextMenu'>
-        <div className='textTypeList'></div>
+    <menu 
+      className={`contextMenu ${isToggled ? 'active' : ''}`}
+      ref={contextMenuRef}
+
+      style={{
+        top: positionY + 2 + 'px',
+        left: positionX + 2 + 'px'
+      }}
+
+    >
         <ol className='btnList'>
-          <li><Button className="list" text="Size"/></li>
-          <li><Button className="list" text="List"/></li>
-          <li><Button className="list" text="Bold"/></li>
-          <li><Button className="list" text="Italic"/></li>
-          <li><Button className="list" text="Highlight"/></li>
+          {buttons.map((button,index) => {           
+              function handleClick(e) {
+                e.stopPropagation()
+                button.onClick(e,rightClickItem)
+              }
+
+              if(Button.isSpacer) return <hr key={index}></hr>
+
+              return (<li><Button className="list" onClick={handleClick} text={button.text}/></li>)
+          })}
+
+
         </ol>
-    </div>
+    </menu>
   )
 }
 

@@ -1,13 +1,18 @@
 .contextMenu {
-    display: flex;
+    display: none;
     flex-direction: column;
 
-    border: solid 1px #D2D5DB;
+    border: solid 1px #F7F2F4;
     border-radius: 10px;
 
-    background-color: #E5E4E2;
+    background-color: #F1EDEE;
 
-    padding: 20px 15px;
+    padding: 20px 0px;
+
+    position: absolute;
+}
+.contextMenu.active {
+    display: flex;
 }
 
 .textTypeList {

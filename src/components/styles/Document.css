@@ -23,6 +23,8 @@
 .info {
     display: flex;
     flex-direction: column;
+
+    width: auto;
 }
 
 .underLine {
@@ -68,8 +70,25 @@
     height: 100%;
 
     outline: 0 solid transparent;
-
-    word-wrap: break-word;
+}
+.text div {
+    font-size: 20px;
+    font-weight: 400;
+}
+.text b {
+    font-size: 20px;
+    font-weight: 800;
+}
+.text i {
+    font-size: 20px;
+}
+.text span {
+    font-size: 20px;
+}
+.text li {
+    font-size: 20px;
+    margin-left: 20px;
+    
 }
 
 .documentName {

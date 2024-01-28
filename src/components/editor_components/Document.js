@@ -5,6 +5,12 @@ import ContextMenu from '../ContextMenu';
 
 function Document({inputId, updateFiles}) {
 
+    function highlightText() {
+        const text = document.getSelection();
+
+        document.execCommand("HiliteColor", false, "red");
+    }
+
     //ContextMenu
     const contextMenuRef = useRef(null);
     const [contextMenu, setContextMenu] = useState({
@@ -115,27 +121,27 @@ function Document({inputId, updateFiles}) {
             buttons={[
             {
                 text: "Size",
-                onClick: () => alert("aa1"),
+                onClick: () => document.execCommand("fontSize", true, '3'),
                 isSpacer: false,
             },
             {
                 text: "List",
-                onClick: () => alert("aa2"),
+                onClick: () => document.execCommand("insertUnorderedList"),
                 isSpacer: false,
             },
             {
                 text: "Bold",
-                onClick: () => alert("aa3"),
+                onClick: () => document.execCommand("bold"),
                 isSpacer: false,
             },
             {
                 text: "Italic",
-                onClick: () => alert("aa4"),
+                onClick: () => document.execCommand("italic"),
                 isSpacer: false,
             },
             {
                 text: "Highlight",
-                onClick: () => alert("aa5"),
+                onClick: () => document.execCommand("HiliteColor", true, "yellow"),
                 isSpacer: false,
             },
         ]}/>

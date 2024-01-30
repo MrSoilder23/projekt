@@ -75,21 +75,15 @@ function Document({inputId, updateFiles}) {
     })
 
     //File Setup
+    const [isInitialRender, setIsInitialRender] = useState(true);
+
     const [file, setFile] = useState([]);
     const [fileName, setFileName] = useState('');
+    const [fileText, setFileText] = useState('');
 
     useEffect(()=>{
         fetchFile();
     },[inputId, updateFiles])
-
-    useEffect(() => {
-        const delaySendData = setTimeout(() => {
-            updateName();
-            updateFiles(fileName);
-        },4000)
-        
-        return () => clearTimeout(delaySendData);
-    },[fileName] )
 
     //fetch file by sending its id
     const fetchFile = async () => {
@@ -109,6 +103,45 @@ function Document({inputId, updateFiles}) {
             data: form.serialize(),
         });
     }
+
+    //Wait to send new fileName
+    useEffect(() => {
+        const delaySendData = setTimeout(() => {
+            updateName();
+            updateFiles(fileName);
+        },4000)
+        
+        return () => clearTimeout(delaySendData);
+    },[fileName] )
+
+    //Update text by sending new form
+    const updateText = () => {
+        setFileText(document.getElementById('text').innerHTML)
+        alert(fileText);
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:8000/sendText.php',
+            data: {
+                text: fileText,
+                id: inputId,
+            }
+        })
+    }
+
+    useEffect(() => {
+
+        if (isInitialRender) {
+            setIsInitialRender(false);
+            return;
+          }
+
+        const delaySendData = setTimeout(() => {
+            
+            updateText();
+        }, 2000)
+
+        return () => clearTimeout(delaySendData);
+    },[fileText])
 
   return (
     <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
@@ -172,10 +205,11 @@ function Document({inputId, updateFiles}) {
             </div>
         </div>
         <div className='textContainer'>
-            <div className='text' contentEditable="true">
-                <h2>Borys to gicior</h2>
-                <h3>Lorem Ipsum is simply dummy text of the printing and typesetting</h3>
+            {file.map((item) => {
+                return <div className='text' id='text' contentEditable="true" onInput={(e) => setFileText(e.currentTarget.innerHTML)} dangerouslySetInnerHTML={{__html: item.text}}>
+             
             </div>
+            })}
         </div>
     </div>
   )

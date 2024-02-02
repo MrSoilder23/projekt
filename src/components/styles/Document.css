@@ -118,3 +118,9 @@ h4 {
     font-size: 14px;
     font-weight: 800;
 }
+.header {
+    font-size: 36px;
+    font-weight: 800;
+    
+    margin-bottom: 15px;
+}

@@ -5,10 +5,85 @@ import ContextMenu from '../ContextMenu';
 
 function Document({inputId, updateFiles}) {
 
-    function highlightText() {
-        const text = document.getSelection();
+    function createHeader() {
+        var select = document.getSelection();
+        var selectedText = select.toString();
 
-        document.execCommand("HiliteColor", false, "red");
+        if(selectedText) {
+
+            var range = select.getRangeAt(0);
+            range.deleteContents();
+
+            var elm = document.createElement('span');
+            elm.className = "header";
+            elm.style = "font-size:36px"
+            var textNode = document.createTextNode(selectedText);
+            elm.appendChild(textNode);
+
+            range.insertNode(elm);
+
+            select.removeAllRanges();
+        }
+
+    }
+    function changeSize() {
+        var select = document.getSelection();
+        var selectedText = select.toString();
+
+        if(selectedText) {
+
+            var range = select.getRangeAt(0);
+            range.deleteContents();
+
+            var elm = document.createElement('span');
+            elm.style = "font-size:24px"
+            var textNode = document.createTextNode(selectedText);
+            elm.appendChild(textNode);
+
+            range.insertNode(elm);
+
+            select.removeAllRanges();
+        }
+    }
+
+    function formatText(btn) {
+        var select = document.getSelection();
+        var selectedText = select.toString();
+
+        if(selectedText) {
+
+            switch(btn) {
+                case 0: 
+                    var range = select.getRangeAt(0);
+                    range.deleteContents();
+
+                    var elm = document.createElement('span');
+                    elm.className = "header";
+                    elm.style = "font-size:36px"
+                    var textNode = document.createTextNode(selectedText);
+                    elm.appendChild(textNode);
+
+                    range.insertNode(elm);
+
+                    select.removeAllRanges();
+                    break;
+                case 1:
+                    var range = select.getRangeAt(0);
+                    range.deleteContents();
+                
+                    var elm = document.createElement('span');
+                    elm.style = "font-size:24px"
+                    var textNode = document.createTextNode(selectedText);
+                    elm.appendChild(textNode);
+                
+                    range.insertNode(elm);
+                
+                    select.removeAllRanges();
+                    break;
+            }   
+
+
+        }
     }
 
     //ContextMenu
@@ -116,20 +191,23 @@ function Document({inputId, updateFiles}) {
 
     //Update text by sending new form
     const updateText = () => {
-        setFileText(document.getElementById('text').innerHTML)
-        alert(fileText);
+        
         $.ajax({
             type: "POST",
             url: 'http://localhost:8000/sendText.php',
             data: {
                 text: fileText,
                 id: inputId,
+            },
+            success: function(){
+                alert("aaaa");
             }
         })
     }
 
     useEffect(() => {
 
+        //Skip initial render to prevent text from deleting
         if (isInitialRender) {
             setIsInitialRender(false);
             return;
@@ -153,8 +231,13 @@ function Document({inputId, updateFiles}) {
             positionY={contextMenu.position.y} 
             buttons={[
             {
+                text: "Header1",
+                onClick: () => formatText(0),
+                isSpacer: false,
+            },
+            {
                 text: "Size",
-                onClick: () => document.execCommand("fontSize", true, '3'),
+                onClick: () => formatText(1),
                 isSpacer: false,
             },
             {
@@ -206,9 +289,7 @@ function Document({inputId, updateFiles}) {
         </div>
         <div className='textContainer'>
             {file.map((item) => {
-                return <div className='text' id='text' contentEditable="true" onInput={(e) => setFileText(e.currentTarget.innerHTML)} dangerouslySetInnerHTML={{__html: item.text}}>
-             
-            </div>
+                return <div className='text' id='text' contentEditable="true" onInput={(e) => setFileText(e.currentTarget.innerHTML)} dangerouslySetInnerHTML={{__html: item.text}}/>
             })}
         </div>
     </div>

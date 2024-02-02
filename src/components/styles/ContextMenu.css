@@ -5,7 +5,7 @@
     border: solid 1px #F7F2F4;
     border-radius: 10px;
 
-    background-color: #F1EDEE;
+    background-color: var(--firstBox);
 
     overflow: hidden;
 

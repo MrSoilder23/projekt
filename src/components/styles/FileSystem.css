@@ -9,10 +9,9 @@
     -webkit-box-sizing: border-box;
 
     border-radius: 15px 0 0 0;
-    border: solid 1px #F7F2F4;
     border-bottom: none;
 
-    background-color: #F1EDEE;
+    background-color: var(--firstBox);
 }
 
 .fileNavbar {
@@ -25,7 +24,7 @@
     width: 22px;
     height: 22px;
 
-    background-color: #474554;
+    background-color: var(--primary);
     margin: 12px 11px;
 }
 .fileNavbar ol{
@@ -39,7 +38,7 @@
     height: 1px;
     width: 65%;
 
-    background-color: #474554;
+    background-color: var(--primary);
 }
 
 
@@ -65,7 +64,7 @@
 }
 .folder::before {
     content: "";
-    border-color: #474554 transparent transparent transparent;
+    border-color: var(--primary) transparent transparent transparent;
     border-style: solid;
     border-width: 0.35em 0.35em 0 0.35em;
 
@@ -76,7 +75,7 @@
 .folders {
     display: none;
 
-    background-color: #EBE7E8;
+    background-color: var(--secondBox);
     box-shadow: inset 2px 2px 2px -1px rgba(0, 0, 0, 0.25), 2px 0px 4px -1px rgba(0, 0, 0, 0.25);
 
     height: 100%;

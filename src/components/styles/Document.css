@@ -16,7 +16,7 @@
     width: 4px;
 }
 .document::-webkit-scrollbar-thumb {
-    background: #474554;
+    background: var(--primary);
     border-radius: 3px;
 }
 
@@ -30,7 +30,7 @@
 .underLine {
     height: 1px;
     width: 277px;
-    background-color: #474554;
+    background-color: var(--primary);
 
     margin-top: 2px;
 }
@@ -60,7 +60,7 @@
     
     padding: 6px 12px;
 
-    background-color: #F1EDEE;
+    background-color: var(--firstBox);
     border: solid 1px #F7F2F4;
 }
 
@@ -95,7 +95,7 @@
     font-size: 40px;
     font-weight: 800;
     
-    background-color: #fdf8f9;
+    background-color: var(--background);
     border: none;
     outline: 0 solid transparent;
 }

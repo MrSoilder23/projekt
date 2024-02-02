@@ -15,7 +15,7 @@ button.list {
     background-color: transparent;
 }
 .unActBtn {
-    background-color: #E5E4E2;
+    background-color: transparent;
     transition: 0.2s;
 }
 button:hover {
@@ -25,7 +25,7 @@ button:hover {
 button.list.actBtn {
     background-color: rgba(28, 27, 33, 0.05);
 
-    border-left: 2px solid #474554;
+    border-left: 2px solid var(--primary);
 }
 .actBtn .folder::before {
     rotate: -90deg;

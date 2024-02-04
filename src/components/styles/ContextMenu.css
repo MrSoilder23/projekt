@@ -5,9 +5,14 @@
     border: solid 1px #F7F2F4;
     border-radius: 10px;
 
+    padding-top: 5px;
+    padding-left: 6px;
+    padding-right: 1px;
+    padding-bottom: 5px;
+
     background-color: var(--firstBox);
 
-    overflow: hidden;
+
 
     position: absolute;
 }
@@ -18,7 +23,7 @@
 .textTypeList {
 
 }
-
-.btnList {
-
+.btnList li {
+    display: inline;
+    margin-right: 5px;
 }

@@ -30,3 +30,6 @@
 ol {
   list-style-type: none;
 }
+u {
+  text-decoration: underline;
+}

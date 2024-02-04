@@ -30,7 +30,7 @@ const ContextMenu = ({
 
               if(Button.isSpacer) return <hr key={index}></hr>
 
-              return (<li><Button className="list" onClick={handleClick} text={button.text}/></li>)
+              return (<li key={index}><Button className={"rounded"} onClick={handleClick} text={button.text}/></li>)
           })}
 
 

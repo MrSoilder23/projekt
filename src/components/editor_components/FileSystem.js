@@ -59,14 +59,16 @@ function FileSystem({documentId, receiveUpdate}) {
     <div className='fileSystem'>
         <div className='fileNavbar'>
             <ol>
+                <div className='searchTab'>
+                    <span class="material-symbols-outlined">search</span> 
+                    <input className='search'></input>
+                </div>
+                    
                 <form action='http://localhost:8000/server.php' method='post' onSubmit={(event) => createNew(event)}>
-                    <button className='fileBtn' type='submit' name='save' onClick={createFileBtn}><li></li></button>
+                    <button className='fileBtn' type='submit' name='save' onClick={createFileBtn}>+</button>
                 </form>
-                
-                <button className='fileBtn'><li>a</li></button>
-                <button className='fileBtn'><li>a</li></button>
             </ol>
-            <div className='line'></div>
+
         </div>
 
         <div className='fileContainer'>

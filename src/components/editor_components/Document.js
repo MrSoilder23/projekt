@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import $ from "jquery"
 import '../styles/Document.css'
 import ContextMenu from '../ContextMenu';
+import Button from '../Button';
+import DropdownMenu from '../DropdownMenu';
 
 function Document({inputId, updateFiles}) {
 
@@ -95,9 +97,12 @@ function Document({inputId, updateFiles}) {
         },
         toggled: false,
     });
+    const [currentText, setCurrentText] = useState('Header')
+    const [list, toggleList] = useState(false);
 
     function handleContextMenu(e) {
         e.preventDefault();
+        toggleList(false);
 
         const contextMenuAttr = contextMenuRef.current.getBoundingClientRect();
 
@@ -137,6 +142,7 @@ function Document({inputId, updateFiles}) {
             if(contextMenuRef.current) {
                 if(!contextMenuRef.current.contains(e.target)) {
                     resetContextMenu()
+                    toggleList(false);
                 }
             }
         }
@@ -221,6 +227,12 @@ function Document({inputId, updateFiles}) {
         return () => clearTimeout(delaySendData);
     },[fileText])
 
+    function changeTextBtn(name) {
+        setCurrentText(name);
+        
+        toggleList(false);
+    }
+
   return (
     <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
 
@@ -231,12 +243,30 @@ function Document({inputId, updateFiles}) {
             positionY={contextMenu.position.y} 
             buttons={[
             {
-                text: "Header1",
+                text: <div className='buttons'>{currentText}
+                        <Button className={"arrowDown"} text={""} onClick={() => toggleList(!list)}/>
+                        <DropdownMenu isToggled={list} buttons={[
+                            {text: "Header", onClick: () => changeTextBtn("Header")},
+                            {text: "Normal", onClick: () => changeTextBtn("Normal")}]}/>
+                      </div>,
                 onClick: () => formatText(0),
                 isSpacer: false,
             },
             {
-                text: "Size",
+                text: <div className='buttons'><input className='list' defaultValue={20}></input>
+                        <Button className={"arrowDown"} text={""} onClick={() => toggleList(!list)}/>
+                        <DropdownMenu isToggled={list} buttons={[
+                            {text: "16", onClick: () => changeTextBtn("")},
+                            {text: "18", onClick: () => changeTextBtn("")},
+                            {text: "20", onClick: () => changeTextBtn("")},
+                            {text: "22", onClick: () => changeTextBtn("")},
+                            {text: "24", onClick: () => changeTextBtn("")},
+                            {text: "26", onClick: () => changeTextBtn("")},
+                            {text: "28", onClick: () => changeTextBtn("")},
+                            {text: "30", onClick: () => changeTextBtn("")},
+                            {text: "32", onClick: () => changeTextBtn("")},
+                            ]}/>
+                      </div>,
                 onClick: () => formatText(1),
                 isSpacer: false,
             },
@@ -246,17 +276,22 @@ function Document({inputId, updateFiles}) {
                 isSpacer: false,
             },
             {
-                text: "Bold",
+                text: <b>B</b>,
                 onClick: () => document.execCommand("bold"),
                 isSpacer: false,
             },
             {
-                text: "Italic",
+                text: <i>i</i>,
                 onClick: () => document.execCommand("italic"),
                 isSpacer: false,
             },
             {
-                text: "Highlight",
+                text: <u>U</u>,
+                onClick: () => document.execCommand("underLine"),
+                isSpacer: false,
+            },
+            {
+                text: "A",
                 onClick: () => document.execCommand("HiliteColor", true, "yellow"),
                 isSpacer: false,
             },

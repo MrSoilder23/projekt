@@ -82,6 +82,9 @@
 .text i {
     font-size: 20px;
 }
+.text u {
+    font-size: 20px;
+}
 .text span {
     font-size: 20px;
 }
@@ -89,6 +92,15 @@
     font-size: 20px;
     margin-left: 20px;
     
+}
+b {
+    font-weight: 800;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
 }
 
 .documentName {
@@ -102,6 +114,16 @@
 
 .invis {
     display: none;
+}
+
+.list {
+    background-color: transparent;
+    outline: none;
+    border: none;
+
+    width: 20px;
+
+    font-weight: 600;
 }
 
 h2 {

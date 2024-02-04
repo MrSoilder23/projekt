@@ -9,7 +9,7 @@ function Navbar() {
         <div className='navContainer'>
             <ol>
                 <li><Link to='/' className='homeBtn'></Link></li>
-                <li><Link to='/'></Link></li>
+                <li><Link to='/graphview'></Link></li>
                 <li><Link to='/'></Link></li>
                 <li><Link to='/'></Link></li>
                 <li><Link to='/'></Link></li>

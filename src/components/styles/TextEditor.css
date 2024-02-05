@@ -1,6 +1,7 @@
 .textEditorPage {
     display: flex;
     flex-direction: row;
+
     width: 100%;
     overflow: hidden;
 }

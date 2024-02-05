@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import $ from "jquery"
 import '../styles/FileSystem.css'
 import Button from '../Button.js';
@@ -6,6 +6,26 @@ import Button from '../Button.js';
 
 function FileSystem({documentId, receiveUpdate}) {
 
+    //File list resizer
+    const isResized = useRef(false);
+
+    const [panelWidth, setPanelWidth] = useState(240);
+
+    useEffect(() => {
+        window.addEventListener("mousemove", (e) => {
+            if(!isResized.current) {
+                return
+            }
+
+            setPanelWidth((previousWidth) => previousWidth +e.movementX / 2);
+        })
+
+        window.addEventListener("mouseup", () => {
+            isResized.current = false;
+        })
+    }, [])
+
+    //File list setup
     const [active, setActive] = useState({
         activeObject: null,
     });
@@ -56,49 +76,54 @@ function FileSystem({documentId, receiveUpdate}) {
     }
 
   return (
-    <div className='fileSystem'>
-        <div className='fileNavbar'>
-            <ol>
-                <div className='searchTab'>
-                    <span class="material-symbols-outlined">search</span> 
-                    <input className='search'></input>
-                </div>
-                    
-                <form action='http://localhost:8000/server.php' method='post' onSubmit={(event) => createNew(event)}>
-                    <button className='fileBtn' type='submit' name='save' onClick={createFileBtn}>+</button>
-                </form>
-            </ol>
+    <div className='fileList'>
+        <div className='fileSystem' style={{width: `${panelWidth / 16}rem`}}>
+            <div className='fileNavbar'>
+                <ol>
+                    <div className='searchTab'>
+                        <span class="material-symbols-outlined">search</span> 
+                        <input className='search'></input>
+                    </div>
 
-        </div>
+                    <form action='http://localhost:8000/server.php' method='post' onSubmit={(event) => createNew(event)}>
+                        <button className='fileBtn' type='submit' name='save' onClick={createFileBtn}>+</button>
+                    </form>
+                </ol>
 
-        <div className='fileContainer'>
-            <ol className='files'>
+            </div>
 
-                {file.map((item) => {
-                    return <li className='file'><Button key={"id: "+item.id} className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/></li>
-                })}
+            <div className='fileContainer'>
+                <ol className='files'>
 
-                {/*
-                <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li><div className='folder'/>Folder1</li></button>
-                
-                <li className='folder'>Folder2</li>
-                <li className='folder'>Folder3</li>
+                    {file.map((item) => {
+                        return <li className='file'><Button key={"id: "+item.id} className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/></li>
+                    })}
 
-                <li className='file'>Dokument1</li>
-                <li className='file'>Dokument2</li>
-                <li className='file'>Dokument3</li>
-                <li className='file'>Dokument4</li>
-                */}
-            </ol>
-            <div className={active ? "folderAct" : "folderUnAct"}>
-                <ol className="folders">
                     {/*
-                    <li className='file'>Plik1</li>
-                    <li className='file'>Plik1</li>
+                    <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li><div className='folder'/>Folder1</li></button>
+
+                    <li className='folder'>Folder2</li>
+                    <li className='folder'>Folder3</li>
+
+                    <li className='file'>Dokument1</li>
+                    <li className='file'>Dokument2</li>
+                    <li className='file'>Dokument3</li>
+                    <li className='file'>Dokument4</li>
                     */}
                 </ol>
+                <div className={active ? "folderAct" : "folderUnAct"}>
+                    <ol className="folders">
+                        {/*
+                        <li className='file'>Plik1</li>
+                        <li className='file'>Plik1</li>
+                        */}
+                    </ol>
+                </div>
             </div>
+                    
         </div>
+        <div onMouseDown={() => {isResized.current = true}} className='resizerRight'></div>
+        <div id="aaaa"></div>
     </div>
   )
 }

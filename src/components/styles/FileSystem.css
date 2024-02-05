@@ -4,7 +4,9 @@
 
     height: 100%;
     width: 240px;
-   
+
+    max-width: 400px;
+    min-width: 180px;
 
     box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -121,4 +123,20 @@
     display: none;
     width: 100%;
     transition: all 0.2s ease-in-out;
+}
+
+.resizerRight {
+    cursor: col-resize;
+    
+    height: 100%;
+    width: 1px;
+    
+}
+.resizerRight:hover {
+    width: 3px;
+    background-color: var(--secondBox);
+}
+.fileList {
+    display: flex;
+    flex-direction: row;
 }

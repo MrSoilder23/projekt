@@ -123,7 +123,6 @@ function FileSystem({documentId, receiveUpdate}) {
                     
         </div>
         <div onMouseDown={() => {isResized.current = true}} className='resizerRight'></div>
-        <div id="aaaa"></div>
     </div>
   )
 }

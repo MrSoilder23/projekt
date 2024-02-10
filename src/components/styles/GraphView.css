@@ -21,4 +21,8 @@
     ) 
     0 0 / 100px 100px;
 }
+
+div {
+  outline: none;
+}
     

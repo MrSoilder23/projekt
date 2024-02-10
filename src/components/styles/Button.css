@@ -47,6 +47,16 @@ button.rounded {
 button.rounded:hover {
     background-color: rgba(28, 27, 33, 0.05);
 }
+button.roundedBig {
+    padding: 6px 13px;
+    border-radius: 17px;
+    
+    background-color: var(--secondBox);
+    transition: background-color 0.2s ease-in;
+}
+button.roundedBig:hover {
+    background-color: rgba(var(--primary), 0.1);
+}
 
 
 button.li {

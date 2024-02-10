@@ -219,6 +219,20 @@ function Document({inputId, updateFiles}) {
             return;
           }
 
+        if(fileText.includes('Relates to:')) {
+            const word = "Relates to:"
+            const index = fileText.indexOf(word);
+            const length = word.length;	
+
+            const result = fileText.slice(index + length);
+
+            const stopAtWord = "</"
+            const array = result.split(stopAtWord);
+            
+
+            alert(array[0])
+        }
+
         const delaySendData = setTimeout(() => {
             
             updateText();

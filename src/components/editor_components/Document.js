@@ -4,6 +4,7 @@ import '../styles/Document.css'
 import ContextMenu from '../ContextMenu';
 import Button from '../Button';
 import DropdownMenu from '../DropdownMenu';
+import AlertMenu from '../AlertMenu';
 
 function Document({inputId, updateFiles}) {
 
@@ -211,6 +212,8 @@ function Document({inputId, updateFiles}) {
         })
     }
 
+    const [alertMenu, isAlertMenuActive] = useState(false)
+
     useEffect(() => {
 
         //Skip initial render to prevent text from deleting
@@ -229,8 +232,25 @@ function Document({inputId, updateFiles}) {
             const stopAtWord = "</"
             const array = result.split(stopAtWord);
             
+            var noSpaceText = array[0].replace(/\s/g, '');
 
-            alert(array[0])
+
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8000/searchFile.php',
+                data: {
+                    id: inputId,
+                    name: noSpaceText,
+                },
+                success: function(data){
+                    alert(data);
+                },
+                error: function() {
+                    alert("error")
+                }
+            })
+
+            alert(noSpaceText)
         }
 
         const delaySendData = setTimeout(() => {
@@ -249,6 +269,14 @@ function Document({inputId, updateFiles}) {
 
   return (
     <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
+
+        <AlertMenu 
+            isActive={alertMenu} 
+            icon={"!"}
+            heading={"File doesn't exist"} 
+            text={"You don’t have that file yet, do you want to create it now?"} 
+            buttonText={"Accept"}
+        />
 
         <ContextMenu 
             contextMenuRef={contextMenuRef} 

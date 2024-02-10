@@ -8,7 +8,8 @@ function AlertMenu({
     text,
     icon,
     buttonText,
-    onClick
+    onClick,
+    onClose
 }) {
   return (
     <div className={`alertMenu ${isActive ? 'active' : ''}`}>
@@ -22,8 +23,8 @@ function AlertMenu({
           </div>
         </div>
         <div className='alertButtons'>
-            <Button text={"Cancel"} onClick={isActive = false}/>
-            <Button className={"roundedBig"} text={buttonText}/>
+            <Button text={"Cancel"} onClick={onClose}/>
+            <Button className={"roundedBig"} onClick={onClick} text={buttonText}/>
         </div>
     </div>
   )

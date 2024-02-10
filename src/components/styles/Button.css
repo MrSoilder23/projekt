@@ -55,7 +55,7 @@ button.roundedBig {
     transition: background-color 0.2s ease-in;
 }
 button.roundedBig:hover {
-    background-color: rgba(var(--primary), 0.1);
+    background-color: rgba(var(--primaryRGB), 0.1);
 }
 
 

@@ -218,7 +218,7 @@ function Document({inputId, updateFiles}) {
             setIsInitialRender(false);
             return;
           }
-
+        //Find relates to part
         if(fileText.includes('Relates to:')) {
             const word = "Relates to:"
             const index = fileText.indexOf(word);

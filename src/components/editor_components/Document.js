@@ -246,11 +246,12 @@ function Document({inputId, updateFiles}) {
                     alert(data);
                 },
                 error: function() {
+                    isAlertMenuActive(true)
                     alert("error")
                 }
             })
 
-            alert(noSpaceText)
+            
         }
 
         const delaySendData = setTimeout(() => {
@@ -276,6 +277,7 @@ function Document({inputId, updateFiles}) {
             heading={"File doesn't exist"} 
             text={"You don’t have that file yet, do you want to create it now?"} 
             buttonText={"Accept"}
+            onClose={(e) => isAlertMenuActive(false)}
         />
 
         <ContextMenu 

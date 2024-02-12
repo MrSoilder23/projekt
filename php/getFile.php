@@ -10,7 +10,7 @@
         name, 
         date, 
         hour, 
-        text, 
+        url, 
         tags 
             from file 
         WHERE 
@@ -20,14 +20,22 @@
     $files = array();
     
     while($row = mysqli_fetch_array($result)) {
+        $fileData = fopen($row['url'], "r");
+        $fileSize = filesize($row['url']);
+        $size = 1;
+        if($fileSize > 0) {
+            $size = $fileSize;
+        }
+
         $files[] = array(
             'id' => $row['id'],
             'name' => $row['name'],
             'date' => $row['date'],
             'hour' => $row['hour'],
-            'text' => $row['text'],
+            'text' => fread($fileData, $size),
             'tags' => $row['tags']
         );
+        fclose($fileData);
     }
     
     $response = ['success' => true, 'data' => $files];

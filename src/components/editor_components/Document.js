@@ -212,50 +212,59 @@ function Document({inputId, updateFiles}) {
         })
     }
 
-    const [alertMenu, isAlertMenuActive] = useState(false)
+    const [alertMenu, isAlertMenuActive] = useState(false);
+    const [alertMenuLimit, setAlertMenuLimit] = useState(0);
 
+    //Sends update after finishing writing
     useEffect(() => {
 
         //Skip initial render to prevent text from deleting
         if (isInitialRender) {
             setIsInitialRender(false);
             return;
-          }
-        //Find relates to part
-        if(fileText.includes('Relates to:')) {
-            const word = "Relates to:"
-            const index = fileText.indexOf(word);
-            const length = word.length;	
-
-            const result = fileText.slice(index + length);
-
-            const stopAtWord = "</"
-            const array = result.split(stopAtWord);
-            
-            var noSpaceText = array[0].replace(/\s/g, '');
-
-
-            $.ajax({
-                type: "POST",
-                url: 'http://localhost:8000/searchFile.php',
-                data: {
-                    id: inputId,
-                    name: noSpaceText,
-                },
-                success: function(data){
-                    alert(data);
-                },
-                error: function() {
-                    isAlertMenuActive(true)
-                    alert("error")
-                }
-            })
-
-            
         }
 
         const delaySendData = setTimeout(() => {
             
+            //Find relates to part
+            if(fileText.includes('Relates to:')) {
+                const word = "Relates to:"
+                const index = fileText.indexOf(word);
+                const length = word.length;	
+
+                const result = fileText.slice(index + length);
+
+                const stopAtWord = "</"
+                const array = result.split(stopAtWord);
+
+                var noSpaceText = array[0].replace(/\s/g, '');
+                
+                
+                if(alertMenuLimit === 3) {
+                    setAlertMenuLimit(0);
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:8000/searchFile.php',
+                    data: {
+                        id: inputId,
+                        name: noSpaceText,
+                    },
+                    success: function(data){
+                        alert(data);
+                    },
+                    error: function() {
+                        if(alertMenuLimit === 0) {
+                            isAlertMenuActive(true)
+                        }
+                        alert("error")
+                        setAlertMenuLimit((currentCount) => currentCount + 1);
+                    }
+                })
+                alert(alertMenuLimit)
+            }
+
             updateText();
         }, 2000)
 

@@ -7,7 +7,7 @@ import "../styles/GraphView.css"
 
 function GraphView() {
 
-  const [grapha, setGraph] = useState({
+  const [graph, setGraph] = useState({
     nodes: [],
     edges: []
   })
@@ -20,17 +20,15 @@ function GraphView() {
         
       }
     })  
-    fetchGrapha()
+    fetchGraph()
   }, [])
 
-  const fetchGrapha = async () => {
+  const fetchGraph = async () => {
     const file = await fetch('http://localhost:8000/getMap.php');
     const response = await file.json();
     
     const node = response.nodes
     const edge = response.edges
-
-    alert(response.nodes)
 
     const parsedNodes = node.map(node => JSON.parse(node));
     const parsedEdges = edge.map(edge => JSON.parse(edge));
@@ -40,9 +38,7 @@ function GraphView() {
       edges: parsedEdges
     }) 
 
-    
   }
-
 
   const options = {
     nodes: {
@@ -69,7 +65,7 @@ function GraphView() {
   return (
     <div className='graphView'>
         <div className='graphViewContainer'>
-          {grapha.nodes[0] && <Graph graph={grapha} options={options} key={uuidv4()} />}
+          {graph.nodes[0] && <Graph graph={graph} options={options} key={uuidv4()} />}
 
         </div>
     </div>

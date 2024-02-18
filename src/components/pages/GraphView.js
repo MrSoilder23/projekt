@@ -1,30 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Graph from 'react-graph-vis'
+import $ from "jquery"
+import { v4 as uuidv4 } from 'uuid';
+
 import "../styles/GraphView.css"
 
 function GraphView() {
 
-  const graph = {
-    nodes: [
-      {id:1, label: "Node 1", shape: "dot", color: "#F9AA9B" },
-      {id:2, label: "Node 2", shape: "dot", color: "#F9AA9B" },
-      {id:3, label: "Node 3", shape: "dot", color: "#F9AA9B" },
-      {id:4, label: "Node 4", shape: "dot", color: "#F9AA9B" },
-      {id:5, label: "Node 5", shape: "dot", color: "#F9AA9B" },
-      {id:6, label: "Node 6", shape: "dot", color: "#8FB76A" },
-      {id:7, label: "Node 7", shape: "dot", color: "#8FB76A" },
-      {id:8, label: "Node 8", shape: "dot", color: "#8FB76A" },
-      {id:9, label: "Node 9", shape: "dot", color: "#7ABABA" },
-    ],
-    edges: [
-      {from: 1, to: 2, arrows: {to: {enabled: false}}},
-      {from: 1, to: 5, arrows: {to: {enabled: false}}},
-      {from: 2, to: 3, arrows: {to: {enabled: false}}},
-      {from: 6, to: 7, arrows: {to: {enabled: false}}},
-      {from: 7, to: 8, arrows: {to: {enabled: false}}},
-    ]
+  const [grapha, setGraph] = useState({
+    nodes: [],
+    edges: []
+  })
+
+  useEffect(() => {
+    $.ajax({
+      type: "POST",
+      url: 'http://localhost:8000/createMap.php',
+      success: function(data){
+        
+      }
+    })  
+    fetchGrapha()
+  }, [])
+
+  const fetchGrapha = async () => {
+    const file = await fetch('http://localhost:8000/getMap.php');
+    const response = await file.json();
+    
+    const node = response.nodes
+    const edge = response.edges
+
+    alert(response.nodes)
+
+    const parsedNodes = node.map(node => JSON.parse(node));
+    const parsedEdges = edge.map(edge => JSON.parse(edge));
+
+    setGraph({
+      nodes: parsedNodes,
+      edges: parsedEdges
+    }) 
+
+    
   }
-  
+
+
   const options = {
     nodes: {
       borderWidth: 0,
@@ -50,10 +69,8 @@ function GraphView() {
   return (
     <div className='graphView'>
         <div className='graphViewContainer'>
-          <Graph 
-            graph={graph}
-            options={options}
-          />
+          {grapha.nodes[0] && <Graph graph={grapha} options={options} key={uuidv4()} />}
+
         </div>
     </div>
   )

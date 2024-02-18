@@ -27,7 +27,6 @@
             $sql = "UPDATE file SET relates = '$fileId' WHERE id = '$id';";
             mysqli_query($conn, $sql);
 
-
         } else {
             header('HTTP/1.1 500 Internal Server Booboo');
             header('Content-Type: application/json; charset=UTF-8');

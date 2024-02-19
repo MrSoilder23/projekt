@@ -12,6 +12,7 @@ function GraphView() {
     edges: []
   })
 
+  //create map
   useEffect(() => {
     $.ajax({
       type: "POST",
@@ -24,12 +25,14 @@ function GraphView() {
   }, [])
 
   const fetchGraph = async () => {
+    //Fetch data
     const file = await fetch('http://localhost:8000/getMap.php');
     const response = await file.json();
     
     const node = response.nodes
     const edge = response.edges
 
+    //Change fetched data to objects
     const parsedNodes = node.map(node => JSON.parse(node));
     const parsedEdges = edge.map(edge => JSON.parse(edge));
 

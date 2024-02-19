@@ -10,8 +10,12 @@
         $name = $row['name'];
         $id = $row['id'];
 
+        $relateIds = explode(",", $relateId);
+
         $nodes[] = "{'id':'$id', 'label': '$name', 'shape': 'dot', 'color': '#F9AA9B' }";
-        $edges[] = "{'from': '$id', 'to': '$relateId', 'arrows': {'to': {'enabled': false}}}";
+        foreach ($relateIds as $ids) {
+            $edges[] = "{'from': '$id', 'to': '$ids', 'arrows': {'to': {'enabled': false}}}";
+        }
     }
 
     $file = fopen('D:/projektPlikiServer/map/nodes.txt', "w+");

@@ -239,7 +239,6 @@ function Document({inputId, updateFiles}) {
 
                 var noSpaceText = array[0].replace(/\s/g, '');
                 
-                
                 if(alertMenuLimit === 3) {
                     setAlertMenuLimit(0);
                 }

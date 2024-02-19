@@ -21,17 +21,16 @@
                 array_push($correctFiles, $data[0]);
                 echo json_encode($correctFiles);
 
-                $fileId = implode(",", $correctFiles);
-
-                $sql = "UPDATE file SET relates = '$fileId' WHERE id = '$id';";
-                mysqli_query($conn, $sql);
-
             } else {
 
                 die(json_encode($name));
             }
 
         }
+        $fileId = implode(",", $correctFiles);
+
+        $sql = "UPDATE file SET relates = '$fileId' WHERE id = '$id';";
+        mysqli_query($conn, $sql);
     }
 
     $conn -> close();

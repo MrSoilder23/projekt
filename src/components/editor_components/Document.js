@@ -173,6 +173,8 @@ function Document({inputId, updateFiles}) {
         const response = await file.json();
 
         setFile(response.data);
+        setTagArray(response.data[0].tags.split(",").filter(tag => tag !== ''));
+
     }
 
     //Update name by sending new Form
@@ -276,7 +278,22 @@ function Document({inputId, updateFiles}) {
         toggleList(false);
     }
 
-    const [tag, setTag] = useState('');
+    const [tagArray, setTagArray] = useState([]);
+
+    useEffect(() => {
+        if(tagArray[0] !== null && tagArray[0] !== undefined) {
+            $.ajax({
+                type: "POST",
+                url: 'http://localhost:8000/addTags.php',
+                data: {
+                    id: inputId,
+                    tags: tagArray.toString()
+                },
+            })
+
+            document.getElementById('tagSpace').innerHTML = tagArray;
+        }
+    }, [tagArray])
 
   return (
     <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
@@ -371,10 +388,10 @@ function Document({inputId, updateFiles}) {
             <div className='tagContainer'>
                 <div className='tags'>
                 {file.map((item) => { 
-                    return <h4>{item.tags}{tag}</h4>
+                    return <h4 id='tagSpace'>{item.tags}</h4>
                 })}
                 </div>
-                <Button className={"rounded"} onClick={() => setTag(prompt())} text={"+"}/>
+                <Button className={"roundedLight"} onClick={() => setTagArray([...tagArray, "#" + prompt()])} text={"+"}/>
             </div>
         </div>
         <div className='textContainer'>

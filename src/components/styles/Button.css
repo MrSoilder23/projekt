@@ -83,3 +83,11 @@ button.arrowDown::before {
     margin-top: 3px;
     
 }
+
+button.roundedLight {
+    padding: 6px 11px;
+    border-radius: 17px;
+
+    background-color: var(--firstBox);
+    
+}

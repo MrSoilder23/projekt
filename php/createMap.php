@@ -8,6 +8,21 @@
         return random_color_part() . random_color_part() . random_color_part();
     }
     
+    function combine_colors($color1, $color2) {
+        $rgb1 = sscanf($color1, "%02x%02x%02x");
+        $rgb2 = sscanf($color2, "%02x%02x%02x");
+
+        $mixedRgb = [
+            ($rgb1[0] + $rgb2[0]) / 2,
+            ($rgb1[1] + $rgb2[1]) / 2,
+            ($rgb1[2] + $rgb2[2]) / 2,
+        ];
+
+        $mixedHex = sprintf("%02x%02x%02x", $mixedRgb[0], $mixedRgb[1], $mixedRgb[2]);
+
+        return $mixedHex;
+    }
+
     include("start.php");
 
     $sql = "SELECT userTags FROM user WHERE username = 'Borys'";
@@ -19,7 +34,6 @@
     
     $tagList = explode(',', $tags);
 
-
     $colors = array_combine($tagList, array_fill(0, count($tagList), null));
 
     foreach ($colors as $key => $value) {
@@ -29,17 +43,33 @@
 
     $Borys = $colors["#Borys"];
 
-    $sql = "SELECT relates, name, id FROM file";
+    $sql = "SELECT relates, name, id, tags FROM file";
     $result = mysqli_query($conn, $sql);
 
     while($row = mysqli_fetch_array($result)) {
         $relateId = $row['relates'];
         $name = $row['name'];
         $id = $row['id'];
+        $fileTag = $row['tags'];
+
+        $tagList = explode(',', $fileTag);
+        
+        $finalColor = $colors[$tagList[0]];
+
+        if (count($tagList) > 1) {
+            $previousTag = $tagList[0];
+            foreach ($tagList as $tag) {
+            
+                if ($previousTag != $tag) {
+                    $finalColor = combine_colors($colors[$tag], $finalColor);
+                }
+                
+            }
+        }
 
         $relateIds = explode(",", $relateId);
 
-        $nodes[] = "{'id':'$id', 'label': '$name', 'shape': 'dot', 'color': '#$Borys' }";
+        $nodes[] = "{'id':'$id', 'label': '$name', 'shape': 'dot', 'color': '#$finalColor' }";
         foreach ($relateIds as $ids) {
             $edges[] = "{'from': '$id', 'to': '$ids', 'arrows': {'to': {'enabled': false}}}";
         }

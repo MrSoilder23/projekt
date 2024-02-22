@@ -18,7 +18,6 @@ function GraphView() {
       type: "POST",
       url: 'http://localhost:8000/createMap.php',
       success: function(data){
-        
       }
     })  
     fetchGraph()

@@ -264,6 +264,18 @@ function Document({inputId, updateFiles}) {
                     }
                 })
                 alert(alertMenuLimit)
+            } else {
+                $.ajax({
+                    type: "POST",
+                    url: 'http://localhost:8000/searchFile.php',
+                    data: {
+                        id: inputId,
+                        name: null,
+                    },
+                    success: function(data){
+                        alert(data);
+                    },
+                })
             }
 
             updateText();
@@ -278,6 +290,7 @@ function Document({inputId, updateFiles}) {
         toggleList(false);
     }
 
+    //Create tags
     const [tagArray, setTagArray] = useState([]);
 
     useEffect(() => {

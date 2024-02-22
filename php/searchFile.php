@@ -9,6 +9,11 @@
         $nameList = explode(",", $names);
         $correctFiles = (array) null;
 
+        if ($names == null) {
+            $sql = "UPDATE file SET relates = null WHERE id = '$id';";
+            mysqli_query($conn, $sql);
+        }
+
         foreach($nameList as $name) {
 
             $sql = "SELECT id FROM files WHERE name = '$name'";

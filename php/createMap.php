@@ -1,6 +1,33 @@
 <?php
 
+    function random_color_part() {
+        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+    }
+
+    function random_color() {
+        return random_color_part() . random_color_part() . random_color_part();
+    }
+    
     include("start.php");
+
+    $sql = "SELECT userTags FROM user WHERE username = 'Borys'";
+    $result = mysqli_query($conn, $sql);
+
+    while ($row = mysqli_fetch_array($result)) {
+        $tags = $row['userTags'];
+    }
+    
+    $tagList = explode(',', $tags);
+
+
+    $colors = array_combine($tagList, array_fill(0, count($tagList), null));
+
+    foreach ($colors as $key => $value) {
+        // Replace 'your_data_for_' with the actual data you want to assign
+        $colors[$key] =  random_color();
+    }
+
+    $Borys = $colors["#Borys"];
 
     $sql = "SELECT relates, name, id FROM file";
     $result = mysqli_query($conn, $sql);
@@ -12,7 +39,7 @@
 
         $relateIds = explode(",", $relateId);
 
-        $nodes[] = "{'id':'$id', 'label': '$name', 'shape': 'dot', 'color': '#F9AA9B' }";
+        $nodes[] = "{'id':'$id', 'label': '$name', 'shape': 'dot', 'color': '#$Borys' }";
         foreach ($relateIds as $ids) {
             $edges[] = "{'from': '$id', 'to': '$ids', 'arrows': {'to': {'enabled': false}}}";
         }
@@ -34,7 +61,7 @@
     $data = array();
     $data['nodes'] = $nodes;
     $data['edges'] = $edges;
-    echo json_encode($data);
+
 
     $conn -> close();
 ?>

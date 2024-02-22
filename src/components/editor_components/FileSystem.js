@@ -81,7 +81,7 @@ function FileSystem({documentId, receiveUpdate}) {
             <div className='fileNavbar'>
                 <ol>
                     <div className='searchTab'>
-                        <span class="material-symbols-outlined">search</span> 
+                        <span className="material-symbols-outlined">search</span> 
                         <input className='search'></input>
                     </div>
 
@@ -96,7 +96,7 @@ function FileSystem({documentId, receiveUpdate}) {
                 <ol className='files'>
 
                     {file.map((item) => {
-                        return <li className='file'><Button key={"id: "+item.id} className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/></li>
+                        return <li className='file'><Button className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/></li>
                     })}
 
                     {/*

@@ -276,6 +276,8 @@ function Document({inputId, updateFiles}) {
         toggleList(false);
     }
 
+    const [tag, setTag] = useState('');
+
   return (
     <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
 
@@ -369,9 +371,10 @@ function Document({inputId, updateFiles}) {
             <div className='tagContainer'>
                 <div className='tags'>
                 {file.map((item) => { 
-                    return <h4>{item.tags}</h4>
+                    return <h4>{item.tags}{tag}</h4>
                 })}
                 </div>
+                <Button className={"rounded"} onClick={() => setTag(prompt())} text={"+"}/>
             </div>
         </div>
         <div className='textContainer'>

@@ -8,6 +8,7 @@
         return random_color_part() . random_color_part() . random_color_part();
     }
     
+    //Combine colors
     function combine_colors($color1, $color2) {
         $rgb1 = sscanf($color1, "%02x%02x%02x");
         $rgb2 = sscanf($color2, "%02x%02x%02x");
@@ -54,6 +55,7 @@
 
         $tagList = explode(',', $fileTag);
         
+        //init first color
         $finalColor = $colors[$tagList[0]];
 
         if (count($tagList) > 1) {

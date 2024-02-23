@@ -64,7 +64,10 @@
     padding: 6px 12px;
 
     background-color: var(--firstBox);
-    border: solid 1px #F7F2F4;
+
+}
+.tags h4 {
+    margin-bottom: 1px;
 }
 
 .text {
@@ -124,9 +127,12 @@ b {
     outline: none;
     border: none;
 
-    width: 20px;
+    width: 22px;
 
     font-weight: 600;
+}
+.list::placeholder {
+    color: var(--primary);
 }
 
 h2 {

@@ -2,8 +2,7 @@
     display: none;
     flex-direction: column;
 
-    border: solid 1px #F7F2F4;
-    border-radius: 10px;
+    border-radius: 17px;
 
     padding-top: 5px;
     padding-left: 6px;
@@ -25,5 +24,8 @@
 }
 .btnList li {
     display: inline;
-    margin-right: 5px;
+
+}
+.btnList > * {
+    margin-right: 5px ;
 }

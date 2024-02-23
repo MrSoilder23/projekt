@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
-import $ from "jquery"
+import $, { event } from "jquery"
 import '../styles/Document.css'
 import ContextMenu from '../ContextMenu';
 import Button from '../Button';
@@ -8,9 +8,47 @@ import AlertMenu from '../AlertMenu';
 
 function Document({inputId, updateFiles}) {
 
-    function createHeader() {
+    function createHeader(type) {
         var select = document.getSelection();
         var selectedText = select.toString();
+
+        var range = select.getRangeAt(0);
+        range.deleteContents();
+
+        var elm = document.createElement('span');
+
+        if(type === "Header") {
+            if(selectedText) {
+
+                elm.className = "header";
+                elm.style = "font-size:36px"
+                var textNode = document.createTextNode(selectedText);
+                elm.appendChild(textNode);
+    
+            }
+        } else {
+            if(selectedText) {
+                let parentNode = select.anchorNode.parentNode;
+
+                let rangee = document.createRange();
+                rangee.selectNodeContents(parentNode);
+
+                let text = rangee.extractContents().textContent;
+                parentNode.textContent = text;
+            }
+        }
+
+        range.insertNode(elm);
+    
+        select.removeAllRanges();
+    }
+    const [currentSize, setCurrentSize] = useState(20)
+
+    function changeSize(size) {
+        var select = document.getSelection();
+        var selectedText = select.toString();
+
+        setCurrentSize(size);
 
         if(selectedText) {
 
@@ -18,8 +56,7 @@ function Document({inputId, updateFiles}) {
             range.deleteContents();
 
             var elm = document.createElement('span');
-            elm.className = "header";
-            elm.style = "font-size:36px"
+            elm.style = "font-size:"+size+"px"
             var textNode = document.createTextNode(selectedText);
             elm.appendChild(textNode);
 
@@ -27,25 +64,10 @@ function Document({inputId, updateFiles}) {
 
             select.removeAllRanges();
         }
-
     }
-    function changeSize() {
-        var select = document.getSelection();
-        var selectedText = select.toString();
-
-        if(selectedText) {
-
-            var range = select.getRangeAt(0);
-            range.deleteContents();
-
-            var elm = document.createElement('span');
-            elm.style = "font-size:24px"
-            var textNode = document.createTextNode(selectedText);
-            elm.appendChild(textNode);
-
-            range.insertNode(elm);
-
-            select.removeAllRanges();
+    function searchKey(element) {
+        if(event.key === 'Enter') {
+            changeSize(element);
         }
     }
 
@@ -100,10 +122,12 @@ function Document({inputId, updateFiles}) {
     });
     const [currentText, setCurrentText] = useState('Header')
     const [list, toggleList] = useState(false);
+    const [sizeList, toggleSizeList] = useState(false);
 
     function handleContextMenu(e) {
         e.preventDefault();
         toggleList(false);
+        toggleSizeList(false);
 
         const contextMenuAttr = contextMenuRef.current.getBoundingClientRect();
 
@@ -126,6 +150,18 @@ function Document({inputId, updateFiles}) {
             toggled: true
         })
 
+        
+        const select = document.getSelection();
+        if (select.rangeCount > 0) {
+      
+            const fontSize = window.getComputedStyle(select.anchorNode.parentElement).getPropertyValue("font-size");
+
+            var formatedFontSize = fontSize.replace("px", "");
+
+            setCurrentSize(formatedFontSize);
+        }
+
+        
     }
 
     function resetContextMenu() {
@@ -143,7 +179,7 @@ function Document({inputId, updateFiles}) {
             if(contextMenuRef.current) {
                 if(!contextMenuRef.current.contains(e.target)) {
                     resetContextMenu()
-                    toggleList(false);
+
                 }
             }
         }
@@ -273,7 +309,6 @@ function Document({inputId, updateFiles}) {
                         name: null,
                     },
                     success: function(data){
-                        alert(data);
                     },
                 })
             }
@@ -328,30 +363,30 @@ function Document({inputId, updateFiles}) {
             buttons={[
             {
                 text: <div className='buttons'>{currentText}
-                        <Button className={"arrowDown"} text={""} onClick={() => toggleList(!list)}/>
+                        <Button className={"arrowDown"} text={""} onClick={() => {toggleList(!list); toggleSizeList(false)}}/>
                         <DropdownMenu isToggled={list} buttons={[
-                            {text: "Header", onClick: () => changeTextBtn("Header")},
-                            {text: "Normal", onClick: () => changeTextBtn("Normal")}]}/>
+                            {text: "Header", onClick: () => {changeTextBtn("Header"); createHeader("Header")}},
+                            {text: "Normal", onClick: () => {changeTextBtn("Normal"); createHeader("Normal")}}]}/>
                       </div>,
-                onClick: () => formatText(0),
+                onClick: () => {},
                 isSpacer: false,
             },
             {
-                text: <div className='buttons'><input className='list' defaultValue={20}></input>
-                        <Button className={"arrowDown"} text={""} onClick={() => toggleList(!list)}/>
-                        <DropdownMenu isToggled={list} buttons={[
-                            {text: "16", onClick: () => changeTextBtn("")},
-                            {text: "18", onClick: () => changeTextBtn("")},
-                            {text: "20", onClick: () => changeTextBtn("")},
-                            {text: "22", onClick: () => changeTextBtn("")},
-                            {text: "24", onClick: () => changeTextBtn("")},
-                            {text: "26", onClick: () => changeTextBtn("")},
-                            {text: "28", onClick: () => changeTextBtn("")},
-                            {text: "30", onClick: () => changeTextBtn("")},
-                            {text: "32", onClick: () => changeTextBtn("")},
+                text: <div className='buttons'><input className='list' onKeyDown={searchKey(this)} placeholder={currentSize} ></input>
+                        <Button className={"arrowDown"} text={""} onClick={() => {toggleSizeList(!sizeList); toggleList(false)}}/>
+                        <DropdownMenu isToggled={sizeList} zCoord={108} buttons={[
+                            {text: "16", onClick: () => changeSize(16)},
+                            {text: "18", onClick: () => changeSize(18)},
+                            {text: "20", onClick: () => changeSize(20)},
+                            {text: "22", onClick: () => changeSize(22)},
+                            {text: "24", onClick: () => changeSize(24)},
+                            {text: "26", onClick: () => changeSize(26)},
+                            {text: "28", onClick: () => changeSize(28)},
+                            {text: "30", onClick: () => changeSize(30)},
+                            {text: "32", onClick: () => changeSize(32)},
                             ]}/>
                       </div>,
-                onClick: () => formatText(1),
+                onClick: () => {},
                 isSpacer: false,
             },
             {

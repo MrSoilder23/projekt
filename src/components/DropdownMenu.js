@@ -5,9 +5,10 @@ import Button from './Button'
 function DropdownMenu({
     isToggled,
     buttons,
+    zCoord
 }) {
   return (
-    <div className={`dropdown ${isToggled ? 'active' : ''}`}>
+    <div className={`dropdown ${isToggled ? 'active' : ''}`} style={{left: zCoord + "px"}}>
         <ol>
             {buttons.map((button,index) => { 
                 function handleClick(e) {

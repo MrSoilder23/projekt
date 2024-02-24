@@ -12,36 +12,57 @@ function Document({inputId, updateFiles}) {
         var select = document.getSelection();
         var selectedText = select.toString();
 
-        var range = select.getRangeAt(0);
-        range.deleteContents();
-
-        var elm = document.createElement('span');
-
         if(type === "Header") {
             if(selectedText) {
 
+                var elm = document.createElement('span');
+
+                var range = select.getRangeAt(0);
+                range.deleteContents();
+
                 elm.className = "header";
-                elm.style = "font-size:36px"
+                elm.style = "font-size:36px; font-weight: 800; margin-bottom: 15px;"
                 var textNode = document.createTextNode(selectedText);
                 elm.appendChild(textNode);
     
+
+                range.insertNode(elm);
+    
+                select.removeAllRanges();
             }
         } else {
             if(selectedText) {
-                let parentNode = select.anchorNode.parentNode;
 
-                let rangee = document.createRange();
-                rangee.selectNodeContents(parentNode);
+                const range = select.getRangeAt(0);
+                const selectedNode = range.commonAncestorContainer;
+        
+                // Find the nearest ancestor span by traversing upwards
+                const spanElement = findNearestAncestorSpan(selectedNode);
+        
+                if (spanElement) {
+                  // Remove the span element
+                  const textNode = document.createTextNode(spanElement.textContent);
 
-                let text = rangee.extractContents().textContent;
-                parentNode.textContent = text;
+                  spanElement.parentNode.replaceChild(textNode, spanElement);
+
+                }
             }
         }
 
-        range.insertNode(elm);
-    
-        select.removeAllRanges();
     }
+
+    const findNearestAncestorSpan = (node) => {
+        let current = node;
+  
+        while (current && current !== document.body) {
+          if (current.nodeType === 1 && current.nodeName === 'SPAN' && current.classList.contains('header')) {
+            return current;
+          }
+          current = current.parentNode;
+        }
+  
+        return null;
+      };
     const [currentSize, setCurrentSize] = useState(20)
 
     function changeSize(size) {

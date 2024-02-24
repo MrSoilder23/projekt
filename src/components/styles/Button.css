@@ -23,6 +23,7 @@ button.list {
 }
 button:hover {
     background-color: rgba(28, 27, 33, 0.05);
+    cursor: pointer;
     
 }
 button.list.actBtn {

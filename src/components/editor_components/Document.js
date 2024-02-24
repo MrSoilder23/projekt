@@ -40,15 +40,14 @@ function Document({inputId, updateFiles}) {
                 const spanElement = findNearestAncestorSpan(selectedNode);
         
                 if (spanElement) {
-                  // Remove the span element
+                  // Get text from element
                   const textNode = document.createTextNode(spanElement.textContent);
-
+                  // Remove the span element
                   spanElement.parentNode.replaceChild(textNode, spanElement);
-
                 }
+                
             }
         }
-
     }
 
     const findNearestAncestorSpan = (node) => {
@@ -62,7 +61,8 @@ function Document({inputId, updateFiles}) {
         }
   
         return null;
-      };
+      }
+
     const [currentSize, setCurrentSize] = useState(20)
 
     function changeSize(size) {

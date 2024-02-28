@@ -5,12 +5,14 @@ import { v4 as uuidv4 } from 'uuid';
 
 import "../styles/GraphView.css"
 
-function GraphView() {
+function GraphView({fileId}) {
 
   const [graph, setGraph] = useState({
     nodes: [],
     edges: []
   })
+
+  const [update, setUpdate] = useState();
 
   //create map
   useEffect(() => {
@@ -64,10 +66,37 @@ function GraphView() {
     height: "100%",
   }
 
+  const getId = (event) => {
+    if(graph.nodes[0] !== undefined || graph.nodes[0] !== null) {
+      const { nodes } = event;
+      if (nodes.length > 0) {
+        const nodeId = nodes[0];
+        fileId(nodeId);
+      }
+    }
+  }
+
+  const graphEvents = {
+    doubleClick: getId
+  }
+  useEffect(() => {
+    function handleResize() {
+      setUpdate("1")
+    }
+
+    // Attach the event listener to the window object
+    window.addEventListener('resize', handleResize);
+
+    // Remove the event listener when the component unmounts
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [])
+
   return (
     <div className='graphView'>
         <div className='graphViewContainer'>
-          {graph.nodes[0] && <Graph graph={graph} options={options} key={uuidv4()} />}
+          {graph.nodes[0] && <Graph graph={graph} options={options} events={graphEvents} key={uuidv4()} />}
 
         </div>
     </div>

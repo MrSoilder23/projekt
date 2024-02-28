@@ -58,6 +58,11 @@ function FileSystem({documentId, receiveUpdate}) {
 
     useEffect(()=>{
         fetchD();
+
+        toggleActive(receiveUpdate);
+        
+        var element = document
+        toggleActiveStyle(receiveUpdate);
     },[receiveUpdate])
 
     const fetchD = async () => {

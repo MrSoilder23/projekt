@@ -31,7 +31,7 @@ function SplitScreenHandler({handleNames}) {
     const getId = (data) => {
         if(data !== null || data !== undefined) {
             setCurrentFileId(data);
-            setNames(prevNames => ({...prevNames, 1: "TextEditor"}));
+            setNames(prevNames => ({...prevNames, 1: "Notes"}));
             setAmountOfViews(1);
             
         }
@@ -40,8 +40,8 @@ function SplitScreenHandler({handleNames}) {
     function handler(name) {
         if(name === "GraphView") {
             return <GraphView fileId={getId}/>
-        } else if(name === "TextEditor") {
-            if(currentFileId !== null || currentFileId !== undefined) {
+        } else if(name === "Notes") {
+            if(currentFileId !== undefined) {
                 return <TextEditor passId={currentFileId}/>
             } else {
                 return <TextEditor />
@@ -76,9 +76,15 @@ function SplitScreenHandler({handleNames}) {
 
   return (
     <div className='splitHandler' ref={parentWidth}>
-        <div className='view' style={{width: `${panelWidth}%`}}>{handler(names[0])}</div>
-        {<div onMouseDown={() => {isResized.current = true}} className='resizer'></div>}
-        {amountOfViews >= 1 && <div className='view' style={{width: `${100 - panelWidth}%`}}>{handler(names[1])}</div>}
+        <div className='view' style={{width: `${panelWidth}%`}}>
+            {names[0] && <div className='cardContainer'><div className='card'>{names[0]}</div></div>} 
+            {handler(names[0])}
+        </div>
+        {amountOfViews >= 1 &&  <div onMouseDown={() => {isResized.current = true}} className='resizer'></div>}
+        {amountOfViews >= 1 && <div className='view' style={{width: `${100 - panelWidth}%`}}>
+            {names[1] && <div className='cardContainer'><div className='card'>{names[1]}</div></div>}
+            {handler(names[1])}
+        </div>}
     </div>
   )
 

@@ -8,7 +8,7 @@ function Navbar({dataToSend}) {
         <div><button className='User'></button></div>
         <div className='navContainer'>
             <ol>
-                <li><Link to='/' className='homeBtn'><div className='buttonIcon' onClick={() => dataToSend("TextEditor")}></div></Link></li>
+                <li><Link to='/' className='homeBtn'><div className='buttonIcon' onClick={() => dataToSend("Notes")}></div></Link></li>
                 <li><Link to='/'><div className='buttonIcon' onClick={() => dataToSend("GraphView")}></div></Link></li>
                 <li><Link to='/'><div className='buttonIcon'></div></Link></li>
                 <li><Link to='/'><div className='buttonIcon'></div></Link></li>

@@ -17,7 +17,6 @@ function App() {
 
   return (
     <div className="App">
-      <Pages />
       <div className='modules'>
         <Router>
           <Navbar dataToSend={passData}/>

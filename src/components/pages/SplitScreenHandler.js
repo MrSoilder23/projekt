@@ -49,11 +49,10 @@ function SplitScreenHandler({handleNames}) {
         }
     }
 
+    //resizer
     const isResized = useRef(false);
     const parentWidth = useRef(null);
     const [panelWidth, setPanelWidth] = useState(50);
-
-
 
     useEffect(() => {
         window.addEventListener("mousemove", (e) => {
@@ -63,8 +62,6 @@ function SplitScreenHandler({handleNames}) {
 
             const newSplitterPosition = ((e.clientX - 40)/ parentWidth.current.getBoundingClientRect().width) * 100;
 
-            console.log(newSplitterPosition)
-
             setPanelWidth(newSplitterPosition);
         })
 
@@ -73,16 +70,74 @@ function SplitScreenHandler({handleNames}) {
         })
     }, [])
 
+    //Drag and drop cards
+    const dragItem = useRef();
+    const dragOverItemStart = useRef();
+    const dragOverItem = useRef();
+
+    const currentTarget = useRef()
+    const oldTarget = useRef();
+
+    const dragStart = (e) => {
+        dragItem.current = e.target;
+        dragOverItemStart.current = e.currentTarget.parentElement.getAttribute("id");
+        console.log("dragStart: " + dragOverItemStart.current)
+    }
+    
+    const dragEnter = (e) => {
+        dragOverItem.current = e.currentTarget.getAttribute("id");
+        currentTarget.current = e.currentTarget;
+        console.log("dragEnter: " + dragOverItem.current)
+
+        //add border
+        if(oldTarget.current !== currentTarget.current && oldTarget.current !== undefined && oldTarget.current !== null) {
+            oldTarget.current.style.outline = "none";
+        }
+
+        currentTarget.current.style.outline = "var(--primary) solid 3px";
+        oldTarget.current = currentTarget.current;
+    }
+
+    const drop = () => {
+
+        const firstCard = names[0];
+        const secCard = names[1];
+
+        if(dragOverItem.current !== dragOverItemStart.current) {
+
+
+            if(firstCard !== dragItem.current.textContent) {
+                setNames({0: dragItem.current.textContent, 1: firstCard})
+            } else if(secCard !== dragItem.current.textContent) {
+                setNames({0: secCard, 1: dragItem.current.textContent})
+            }
+        }
+
+        currentTarget.current.style.outline = "none";
+        dragItem.current = null;
+        dragOverItem.current = null;
+    }
 
   return (
     <div className='splitHandler' ref={parentWidth}>
         <div className='view' style={{width: `${panelWidth}%`}}>
-            {names[0] && <div className='cardContainer'><div className='card'>{names[0]}</div></div>} 
+            {names[0] && <div className='cardContainer' id="windowOne" onDragEnter={(e) => dragEnter(e)} >
+            <div 
+                className='card' 
+                id="item" 
+                draggable 
+                onDragStart={(e) => dragStart(e)} 
+                
+                onDragEnd={drop}
+                >{names[0]}
+            </div>
+        </div>} 
+            
             {handler(names[0])}
         </div>
         {amountOfViews >= 1 &&  <div onMouseDown={() => {isResized.current = true}} className='resizer'></div>}
         {amountOfViews >= 1 && <div className='view' style={{width: `${100 - panelWidth}%`}}>
-            {names[1] && <div className='cardContainer'><div className='card'>{names[1]}</div></div>}
+            {names[1] && <div className='cardContainer' id="windowTwo" onDragEnter={(e) => dragEnter(e)}><div className='card' id="item" draggable onDragStart={(e) => dragStart(e)} onDragEnd={drop}>{names[1]}</div></div>}
             {handler(names[1])}
         </div>}
     </div>

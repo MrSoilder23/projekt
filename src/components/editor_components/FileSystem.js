@@ -75,6 +75,10 @@ function FileSystem({documentId, receiveUpdate}) {
         }, 1000);
     }
 
+    //handleDrag
+
+    
+
   return (
     <div className='fileList'>
         <div className='fileSystem' style={{width: `${panelWidth / 16}rem`}}>
@@ -96,7 +100,9 @@ function FileSystem({documentId, receiveUpdate}) {
                 <ol className='files'>
 
                     {file.map((item) => {
-                        return <li className='file' draggable={true}><Button className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/></li>
+                        return <li className='file' draggable={true}>
+                            <Button className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/>
+                        </li>
                     })}
 
                     {/*

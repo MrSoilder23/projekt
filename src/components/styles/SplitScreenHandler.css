@@ -20,10 +20,10 @@
     width: 5px;
     height: 100%;
 
-    background-color: black;
+    background-color: var(--primary);
 }
 .resizer:hover {
-    width: 7px;
+    transform: scale(1.5);
 }
 
 .card {
@@ -44,4 +44,5 @@
 }
 .cardContainer {
     display: flex;
+    z-index: 100;
 }

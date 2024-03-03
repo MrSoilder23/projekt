@@ -31,7 +31,7 @@ function SplitScreenHandler({handleNames}) {
     const getId = (data) => {
         if(data !== null || data !== undefined) {
             setCurrentFileId(data);
-            setNames(prevNames => ({...prevNames, 1: "Notes"}));
+            
             setAmountOfViews(1);
             
         }

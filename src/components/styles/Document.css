@@ -47,18 +47,23 @@
 
 .tagContainer {
     display: flex;
+    flex-direction: row;
+    
     margin-top: 10px;
 }
 .tagContainer > Button {
-    margin: 0 10px;
+    margin: 0 3px;
 }
-.tags {
+.tagContainer ul {
+    list-style-type: none;
     display: flex;
     flex-direction: row;
+}
+.tagContainer ul > .tags {
+    margin-right: 7px;
+} 
 
-    align-items: center;
-    justify-content: center;
-
+.tags {
     border-radius: 30px;
     
     padding: 6px 12px;

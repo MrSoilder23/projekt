@@ -359,8 +359,6 @@ function Document({inputId, updateFiles}) {
                     tags: tagArray.toString()
                 },
             })
-
-            document.getElementById('tagSpace').innerHTML = tagArray;
         }
     }, [tagArray])
 
@@ -455,11 +453,11 @@ function Document({inputId, updateFiles}) {
 
 
             <div className='tagContainer'>
-                <div className='tags'>
-                {file.map((item) => { 
-                    return <h4 id='tagSpace'>{item.tags}</h4>
+                <ul>
+                {tagArray.map((tag) => { 
+                    return <li className='tags'><h4>{tag}</h4></li>
                 })}
-                </div>
+                </ul>
                 <Button className={"roundedLight"} onClick={() => setTagArray([...tagArray, "#" + prompt()])} text={"+"}/>
             </div>
         </div>

@@ -126,7 +126,7 @@
 }
 
 .resizerRight {
-    cursor: col-resize;
+    cursor: move;
     position: absolute;
 
     left: auto;

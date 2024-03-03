@@ -15,15 +15,18 @@
 }
 
 .resizer {
-    cursor: col-resize;
+    cursor: move;
 
-    width: 5px;
+    width: 4px;
     height: 100%;
 
     background-color: var(--primary);
+    z-index: 101;
+
+    transition: outline 0.1s ease-out;
 }
 .resizer:hover {
-    transform: scale(1.5);
+    outline: var(--primary) solid 2px;
 }
 
 .card {

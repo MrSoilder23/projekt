@@ -45,6 +45,9 @@
 
     font-weight: 700;
 }
+.card:hover {
+    cursor: pointer;
+}
 .cardContainer {
     display: flex;
     z-index: 100;

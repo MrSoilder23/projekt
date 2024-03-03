@@ -18,13 +18,8 @@
 .contextMenu.active {
     display: flex;
 }
-
-.textTypeList {
-
-}
 .btnList li {
     display: inline;
-
 }
 .btnList > * {
     margin-right: 5px ;

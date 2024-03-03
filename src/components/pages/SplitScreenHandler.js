@@ -31,6 +31,10 @@ function SplitScreenHandler({handleNames}) {
     const getId = (data) => {
         if(data !== null || data !== undefined) {
             setCurrentFileId(data);
+            const hasSpecificName = Object.values(names).includes("Notes")
+            if(amountOfViews === 0 || hasSpecificName !== true) {
+                setNames(prevNames => ({...prevNames, 1: "Notes"}));
+            }
             
             setAmountOfViews(1);
             

@@ -92,43 +92,38 @@ function Document({inputId, updateFiles}) {
         }
     }
 
-    function formatText(btn) {
+    function changeHighlight() {
         var select = document.getSelection();
         var selectedText = select.toString();
 
         if(selectedText) {
+            const range = select.getRangeAt(0);
+            const selectedNode = range.commonAncestorContainer;
+            const spanElement = findNearestAncestorSpan(selectedNode);
 
-            switch(btn) {
-                case 0: 
-                    var range = select.getRangeAt(0);
-                    range.deleteContents();
-
-                    var elm = document.createElement('span');
-                    elm.className = "header";
-                    elm.style = "font-size:36px"
-                    var textNode = document.createTextNode(selectedText);
-                    elm.appendChild(textNode);
-
-                    range.insertNode(elm);
-
-                    select.removeAllRanges();
-                    break;
-                case 1:
-                    var range = select.getRangeAt(0);
-                    range.deleteContents();
+            if(!spanElement) {
+                alert("high1")
                 
-                    var elm = document.createElement('span');
-                    elm.style = "font-size:24px"
-                    var textNode = document.createTextNode(selectedText);
-                    elm.appendChild(textNode);
+                range.deleteContents();
+    
+                var elm = document.createElement('span');
+                elm.style = "background-color: yellow;"
+                var textNode = document.createTextNode(selectedText);
+                elm.appendChild(textNode);
+    
+                range.insertNode(elm);
+                select.removeAllRanges();
+            } else {
+                alert("high2")
                 
-                    range.insertNode(elm);
-                
-                    select.removeAllRanges();
-                    break;
-            }   
+                if (spanElement) {
+                  // Get text from element
+                  const textNode = document.createTextNode(spanElement.textContent);
+                  // Remove the span element
+                  spanElement.parentNode.replaceChild(textNode, spanElement);
+                }
 
-
+            }
         }
     }
 
@@ -181,8 +176,6 @@ function Document({inputId, updateFiles}) {
 
             setCurrentSize(formatedFontSize);
         }
-
-        
     }
 
     function resetContextMenu() {
@@ -265,9 +258,6 @@ function Document({inputId, updateFiles}) {
                 text: fileText,
                 id: inputId,
             },
-            success: function(){
-                alert("aaaa");
-            }
         })
     }
 
@@ -329,8 +319,6 @@ function Document({inputId, updateFiles}) {
                         id: inputId,
                         name: null,
                     },
-                    success: function(data){
-                    },
                 })
             }
 
@@ -361,6 +349,14 @@ function Document({inputId, updateFiles}) {
             })
         }
     }, [tagArray])
+
+    function removeTag(tag) {
+        if(window.confirm("Do you want to delete this tag?")) {
+            const newTags = tagArray.filter(item => item !== tag);
+
+            setTagArray(newTags);
+        }
+    }
 
   return (
     <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
@@ -430,7 +426,7 @@ function Document({inputId, updateFiles}) {
             },
             {
                 text: "A",
-                onClick: () => document.execCommand("HiliteColor", true, "yellow"),
+                onClick: () => changeHighlight(),
                 isSpacer: false,
             },
         ]}/>
@@ -455,7 +451,7 @@ function Document({inputId, updateFiles}) {
             <div className='tagContainer'>
                 <ul>
                 {tagArray.map((tag) => { 
-                    return <li className='tags'><h4>{tag}</h4></li>
+                    return <li className='tags' onClick={() => removeTag(tag)}><h4>{tag}</h4></li>
                 })}
                 </ul>
                 <Button className={"roundedLight"} onClick={() => setTagArray([...tagArray, "#" + prompt()])} text={"+"}/>

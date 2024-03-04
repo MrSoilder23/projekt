@@ -69,7 +69,10 @@
     padding: 6px 12px;
 
     background-color: var(--firstBox);
-
+    transition: background-color 0.1s ease-in;
+}
+.tags:hover {
+    background-color: var(--error);
 }
 .tags h4 {
     margin-bottom: 1px;

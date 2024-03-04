@@ -10,11 +10,12 @@
 }
 
 .App {
-  --primary: #343240;
-  --primaryRGB: 52,50,64;
-  --firstBox: #F1EDEE;
-  --secondBox: #E5E1E3;
+  --primary:    #343240;
+  --primaryRGB:   52,50,64;
+  --firstBox:   #F1EDEE;
+  --secondBox:  #E5E1E3;
   --background: #FDF8F9;
+  --error:      #ff5449;
 
   display: block;
 

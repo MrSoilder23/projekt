@@ -57,8 +57,8 @@ function FileSystem({documentId, receiveUpdate}) {
     }
 
     useEffect(()=>{
-        fetchD();
         if(receiveUpdate !== null && receiveUpdate !== "") {
+            fetchD();
             console.log(receiveUpdate)
             setActive({...active, activeObject: ("id: "+receiveUpdate)});
 

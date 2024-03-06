@@ -32,6 +32,7 @@ nav {
 
 .User {
     position: fixed;
+    z-index: 999;
   
     top: 24px;
     right: 24px;

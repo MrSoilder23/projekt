@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Graph from 'react-graph-vis'
 import $ from "jquery"
 import { v4 as uuidv4 } from 'uuid';
@@ -7,6 +7,7 @@ import "../styles/GraphView.css"
 
 function GraphView({fileId}) {
 
+  const graphRef = useRef()
   const [graph, setGraph] = useState({
     nodes: [],
     edges: []
@@ -78,6 +79,7 @@ function GraphView({fileId}) {
 
   const graphEvents = {
     doubleClick: getId,
+    
   }
   useEffect(() => {
     function handleResize() {
@@ -93,34 +95,48 @@ function GraphView({fileId}) {
     };
   }, [])
 
-  const [search, setSearch] = useState('');
-  const [nodeId, setNodeId] = useState(null);
+  const timeoutRef = useRef(null)
+  const search = (input) => {
 
-  useEffect(() => {
-    
-    const filteredNodes = graph.nodes.filter((node) => node.label.toLowerCase().includes(search.toLowerCase()))
-    
-    if( filteredNodes &&
-      filteredNodes.length > 0 &&
-      filteredNodes[0] &&
-      filteredNodes[0].id !== undefined) {
+    if(timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    } 
 
-      const nodeId = filteredNodes[0].id
-      setNodeId(nodeId)
+    timeoutRef.current = setTimeout(() => {
+      var nodeIdGlobal;
       
-    }
-  }, [search])
+      const filteredNodes = graph.nodes.filter((node) => node.label.toLowerCase().includes(input.target.value.toLowerCase()))
+      if(input.target.value.toLowerCase() !== "") {
+        if( filteredNodes &&
+          filteredNodes.length > 0 &&
+          filteredNodes[0] &&
+          filteredNodes[0].id !== undefined) {
+  
+          const nodeId = filteredNodes[0].id
+          nodeIdGlobal = nodeId;
+        }
+  
+        if(nodeIdGlobal) {
+          graphRef.current.focus(nodeIdGlobal, {
+            scale: 2, // Adjust the scale factor as needed
+              animation: {
+                duration: 1000,
+                easingFunction: 'easeInOutQuad',
+            },
+          });
+        }
+      }
 
-  useEffect(() => {
+    }, 1000)
+    
+  }
 
-
-  }, [nodeId])
 
   return (
     <div className='graphView'>
         <div className='graphViewContainer'>
-          {graph.nodes[0] && <Graph graph={graph} options={options} events={graphEvents} key={uuidv4()} />}
-          <div className='searchContainer'><input className='searchBar' type="text" placeholder='Search' onChange={(e) => setSearch(e.target.value)}></input></div>
+          {graph.nodes[0] && <Graph graph={graph} options={options} events={graphEvents} getNetwork={(network) => (graphRef.current = network)} key={uuidv4()} />}
+          <div className='searchContainer'><input className='searchBar' type="text" placeholder='Search' onInput={search}></input></div>
 
         </div>
     </div>

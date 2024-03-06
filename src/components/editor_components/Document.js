@@ -276,7 +276,7 @@ function Document({inputId, updateFiles}) {
         const delaySendData = setTimeout(() => {
             
             //Find relates to part
-            if(fileText.includes('Relates to:')) {
+            if(fileText.toLowerCase().includes('relates to:')) {
                 const word = "Relates to:"
                 const index = fileText.indexOf(word);
                 const length = word.length;	
@@ -323,7 +323,7 @@ function Document({inputId, updateFiles}) {
             }
 
             updateText();
-        }, 2000)
+        }, 1000)
 
         return () => clearTimeout(delaySendData);
     },[fileText])

@@ -58,6 +58,11 @@ function FileSystem({documentId, receiveUpdate}) {
 
     useEffect(()=>{
         fetchD();
+        if(receiveUpdate !== null && receiveUpdate !== "") {
+            console.log(receiveUpdate)
+            setActive({...active, activeObject: ("id: "+receiveUpdate)});
+
+        }
     },[receiveUpdate])
 
     const fetchD = async () => {
@@ -101,7 +106,7 @@ function FileSystem({documentId, receiveUpdate}) {
 
                     {file.map((item) => {
                         return <li className='file' draggable={true}>
-                            <Button className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/>
+                            <Button id={item.id} className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/>
                         </li>
                     })}
 

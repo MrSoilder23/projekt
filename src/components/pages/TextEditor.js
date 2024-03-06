@@ -16,9 +16,11 @@ function TextEditor({passId}) {
     setUpdate(data);
   }
 
+  // Retrieve Data from SplitScreenHandler
   useEffect(() => {
     if(passId !== undefined) {
       setDataFromSystem(passId);
+      setUpdate(passId);
     }
   }, [passId])
 

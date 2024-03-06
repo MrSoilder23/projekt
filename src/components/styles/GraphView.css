@@ -2,6 +2,8 @@
     display: flex;
     width: 100%;
     height: 100%;
+
+    position: relative;
 }
 
 .graphViewContainer {
@@ -25,4 +27,27 @@
 div {
   outline: none;
 }
-    
+
+.searchBar {
+  padding-left: 17px;
+
+  border: none;
+  outline: none;
+
+  background-color: transparent;
+}
+.searchContainer {
+  display: flex;
+  position: absolute;
+
+  background-color: var(--secondBox);
+  border-radius: 17px;
+
+  height: 30px;
+
+  top: auto;
+  left: auto;
+
+  right: 30px;
+  bottom: 30px;
+}

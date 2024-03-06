@@ -77,7 +77,7 @@ function GraphView({fileId}) {
   }
 
   const graphEvents = {
-    doubleClick: getId
+    doubleClick: getId,
   }
   useEffect(() => {
     function handleResize() {
@@ -93,10 +93,34 @@ function GraphView({fileId}) {
     };
   }, [])
 
+  const [search, setSearch] = useState('');
+  const [nodeId, setNodeId] = useState(null);
+
+  useEffect(() => {
+    
+    const filteredNodes = graph.nodes.filter((node) => node.label.toLowerCase().includes(search.toLowerCase()))
+    
+    if( filteredNodes &&
+      filteredNodes.length > 0 &&
+      filteredNodes[0] &&
+      filteredNodes[0].id !== undefined) {
+
+      const nodeId = filteredNodes[0].id
+      setNodeId(nodeId)
+      
+    }
+  }, [search])
+
+  useEffect(() => {
+
+
+  }, [nodeId])
+
   return (
     <div className='graphView'>
         <div className='graphViewContainer'>
           {graph.nodes[0] && <Graph graph={graph} options={options} events={graphEvents} key={uuidv4()} />}
+          <div className='searchContainer'><input className='searchBar' type="text" placeholder='Search' onChange={(e) => setSearch(e.target.value)}></input></div>
 
         </div>
     </div>

@@ -107,7 +107,7 @@ function Document({inputId, updateFiles}) {
                 range.deleteContents();
     
                 var elm = document.createElement('span');
-                elm.style = "background-color: yellow;"
+                elm.style = "background-color: #f2edb5;"
                 var textNode = document.createTextNode(selectedText);
                 elm.appendChild(textNode);
     
@@ -405,7 +405,7 @@ function Document({inputId, updateFiles}) {
                 isSpacer: false,
             },
             {
-                text: "List",
+                text: <p>List</p>,
                 onClick: () => document.execCommand("insertUnorderedList"),
                 isSpacer: false,
             },
@@ -425,7 +425,7 @@ function Document({inputId, updateFiles}) {
                 isSpacer: false,
             },
             {
-                text: "A",
+                text: <div className='marked'>A</div>,
                 onClick: () => changeHighlight(),
                 isSpacer: false,
             },

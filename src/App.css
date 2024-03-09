@@ -12,23 +12,27 @@
 .App {
   --primary:    #343240;
   --primaryRGB:   52,50,64;
-  --firstBox:   #F1EDEE;
-  --secondBox:  #E5E1E3;
+  --firstBox:   #F7F2F4;
+  --secondBox:  #F1EDEE;
+  --thirdBox:   #E5E1E3;
+  --stroke:     #DDD9DA;
+
+  --webBg:      #E6E2EA;
   --background: #FDF8F9;
   --error:      #ff5449;
 
   display: block;
 
   height: 100vh;
-  background-color: var(--background);
+  background-color: var(--webBg);
 }
 
 .modules {
   display: flex;
 
-  height: 100%;
+  height: calc(100% - 20px);
 
-  overflow-y: hidden;
+
 }
 
 ol {

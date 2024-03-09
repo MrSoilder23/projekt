@@ -1,8 +1,11 @@
 .contextMenu {
     display: none;
-    flex-direction: column;
+    flex-direction: row;
 
-    border-radius: 17px;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 16px;
 
     padding-top: 5px;
     padding-left: 6px;
@@ -19,8 +22,8 @@
     display: flex;
 }
 .btnList li {
-    display: inline;
+    display: inline-block;
 }
 .btnList > * {
-    margin-right: 5px ;
+    margin-right: 8px ;
 }

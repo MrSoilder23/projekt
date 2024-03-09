@@ -37,22 +37,33 @@ button.list.actBtn {
 
 
 button.rounded {
-    padding: 5px 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
-    border-radius: 17px;
+    height: 30px;
+    
+    border-radius: 16px;
 
-    background-color: var(--secondBox);
-
+    background-color: var(--thirdBox);
+    outline: var(--stroke) 1px solid;
+    
     min-width: 29px;
 }
 button.rounded:hover {
     background-color: rgba(28, 27, 33, 0.05);
 }
 button.roundedBig {
-    padding: 6px 13px;
-    border-radius: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    height: 36px;
+    border-radius: 16px;
     
-    background-color: var(--secondBox);
+    background-color: var(--thirdBox);
+    outline: var(--stroke) solid 1px;
     transition: background-color 0.2s ease-in;
 }
 button.roundedBig:hover {
@@ -86,9 +97,16 @@ button.arrowDown::before {
 }
 
 button.roundedLight {
-    padding: 6px 11px;
-    border-radius: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    background-color: var(--firstBox);
-    
+    margin-bottom: 1px;
+
+    width: 30px;
+    height: 29px;
+    border-radius: 16px;
+
+    background-color: var(--thirdBox);
+    outline: var(--stroke) solid 1px;
 }

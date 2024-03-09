@@ -2,8 +2,8 @@
     display: flex;
     flex-direction: column;
 
-    padding-top: 20px;
-    margin-left: 40px;
+    padding-top: 28px;
+    margin-left: 36px;
 
     width: 100%;
     
@@ -49,7 +49,7 @@
     display: flex;
     flex-direction: row;
     
-    margin-top: 10px;
+    margin-top: 16px;
 }
 .tagContainer > Button {
     margin: 0 3px;
@@ -60,7 +60,7 @@
     flex-direction: row;
 }
 .tagContainer ul > .tags {
-    margin-right: 7px;
+    margin-right: 8px;
 } 
 
 .tags {
@@ -68,20 +68,24 @@
     
     padding: 6px 12px;
 
-    background-color: var(--firstBox);
+    background-color: var(--thirdBox);
+    outline: var(--stroke) solid 1px;
     transition: background-color 0.1s ease-in;
 }
 .tags:hover {
+    cursor: pointer;
     background-color: var(--error);
 }
 .tags h4 {
     margin-bottom: 1px;
 }
 
+.textContainer {
+    height: var(100% - 50px);
+}
 .text {
     margin-top: 40px;
     width: 100%;
-    height: 100%;
 
     outline: 0 solid transparent;
 }
@@ -114,6 +118,12 @@ b {
 .buttons {
     display: flex;
     flex-direction: row;
+
+    margin-left: 12px;
+    margin-right: 10px;
+    
+    align-items: center;
+
     height: 100%;
 }
 
@@ -142,7 +152,18 @@ b {
 .list::placeholder {
     color: var(--primary);
 }
-
+.marked {
+    background-color: #f2edb5;
+    padding-right: 1px;
+    padding-left: 1px;
+}
+i {
+    margin-left: -3px;
+}
+p {
+    margin-left: 12px;
+    margin-right: 12px;
+}
 h2 {
     font-size: 36px;
     font-weight: 800;

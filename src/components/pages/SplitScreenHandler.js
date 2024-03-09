@@ -63,7 +63,7 @@ function SplitScreenHandler({handleNames}) {
             if(!isResized.current) {
                 return
             }
-
+            e.preventDefault()
             const newSplitterPosition = ((e.clientX - 40)/ parentWidth.current.getBoundingClientRect().width) * 100;
 
             setPanelWidth(newSplitterPosition);
@@ -126,6 +126,7 @@ function SplitScreenHandler({handleNames}) {
     <div className='splitHandler' ref={parentWidth}>
         <div className='view' style={{width: `${panelWidth}%`}}>
             {names[0] && <div className='cardContainer' id="windowOne" onDragEnter={(e) => dragEnter(e)} >
+            <div></div>
             <div 
                 className='card' 
                 id="item" 
@@ -135,14 +136,30 @@ function SplitScreenHandler({handleNames}) {
                 onDragEnd={drop}
                 >{names[0]}
             </div>
+            <button className='closeBtn'>x</button>
         </div>} 
+            <div className='viewContainer'>
+                {handler(names[0])}
+            </div>
             
-            {handler(names[0])}
         </div>
         {amountOfViews >= 1 &&  <div onMouseDown={() => {isResized.current = true}} className='resizer'></div>}
         {amountOfViews >= 1 && <div className='view' style={{width: `${100 - panelWidth}%`}}>
-            {names[1] && <div className='cardContainer' id="windowTwo" onDragEnter={(e) => dragEnter(e)}><div className='card' id="item" draggable onDragStart={(e) => dragStart(e)} onDragEnd={drop}>{names[1]}</div></div>}
-            {handler(names[1])}
+            {names[1] && <div className='cardContainer' id="windowTwo" onDragEnter={(e) => dragEnter(e)}>
+                <div></div>
+                <div 
+                    className='card' 
+                    id="item" 
+                    draggable 
+                    onDragStart={(e) => dragStart(e)} 
+                    onDragEnd={drop}
+                    >{names[1]}
+                </div>
+                <button className='closeBtn'>x</button>
+            </div>}
+            <div className='viewContainer'>
+                {handler(names[1])}
+            </div>
         </div>}
     </div>
   )

@@ -8,7 +8,7 @@ function AlertMenu({
     text,
     icon,
     buttonText,
-    onClick,
+    onAccept,
     onClose
 }) {
   return (
@@ -21,7 +21,7 @@ function AlertMenu({
         </div>
         <div className='alertButtons'>
             <Button className={"roundedBorder"} text={"Cancel"} onClick={onClose}/>
-            <Button className={"rounded"} onClick={onClick} text={buttonText}/>
+            <Button className={"rounded"} onClick={onAccept} text={buttonText}/>
         </div>
     </div>
   )

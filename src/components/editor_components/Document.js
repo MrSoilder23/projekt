@@ -272,7 +272,7 @@ function Document({inputId, updateFiles}) {
     }
 
     const [alertMenu, isAlertMenuActive] = useState(false);
-    const [alertMenuLimit, setAlertMenuLimit] = useState(0);
+    var alertMenuLimit = 0
 
     //Sends update after finishing writing
     useEffect(() => {
@@ -299,7 +299,7 @@ function Document({inputId, updateFiles}) {
                 var noSpaceText = array[0].replace(/\s/g, '');
                 
                 if(alertMenuLimit === 3) {
-                    setAlertMenuLimit(0);
+                    alertMenuLimit = 0;
                 }
 
                 $.ajax({
@@ -315,15 +315,9 @@ function Document({inputId, updateFiles}) {
                             if(alertMenuLimit === 0) {
                                 isAlertMenuActive(true)
                             }
-                            alert("error")
-                            setAlertMenuLimit((currentCount) => currentCount + 1);
                         }
-
-                        
-                        
                     },
                 })
-                alert(alertMenuLimit)
             } else {
                 $.ajax({
                     type: "POST",
@@ -371,6 +365,30 @@ function Document({inputId, updateFiles}) {
         }
     }
 
+    function createNewFile() {
+        isAlertMenuActive(false)
+
+        const word = "Relates to:"
+        const index = fileText.indexOf(word);
+        const length = word.length;	
+
+        const result = fileText.slice(index + length);
+
+        const stopAtWord = "</"
+        const array = result.split(stopAtWord);
+
+        var noSpaceText = array[0].replace(/\s/g, '');
+
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost:8000/server.php',
+            data: {
+                name: noSpaceText,
+            },
+            
+        });
+    }
+
   return (
     <div className='document' onContextMenu={(e) => handleContextMenu(e)} >
 
@@ -381,6 +399,7 @@ function Document({inputId, updateFiles}) {
             text={"You don’t have that file yet, do you want to create it now?"} 
             buttonText={"Accept"}
             onClose={(e) => isAlertMenuActive(false)}
+            onAccept={() => createNewFile()}
         />
 
         <ContextMenu 

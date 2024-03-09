@@ -48,12 +48,27 @@ button.rounded {
 
     background-color: var(--thirdBox);
     outline: var(--stroke) 1px solid;
-    
+
     min-width: 29px;
 }
 button.rounded:hover {
     background-color: rgba(28, 27, 33, 0.05);
 }
+button.roundedBorder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    height: 30px;
+    
+    border-radius: 16px;
+
+    background-color: transparent;
+    outline: var(--stroke) 1px solid;
+
+    min-width: 29px;
+}
+
 button.roundedBig {
     display: flex;
     align-items: center;

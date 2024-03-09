@@ -311,14 +311,17 @@ function Document({inputId, updateFiles}) {
                     },
                     success: function(data){
                         alert(data);
-                    },
-                    error: function() {
-                        if(alertMenuLimit === 0) {
-                            isAlertMenuActive(true)
+                        if(!data.includes("[")) {
+                            if(alertMenuLimit === 0) {
+                                isAlertMenuActive(true)
+                            }
+                            alert("error")
+                            setAlertMenuLimit((currentCount) => currentCount + 1);
                         }
-                        alert("error")
-                        setAlertMenuLimit((currentCount) => currentCount + 1);
-                    }
+
+                        
+                        
+                    },
                 })
                 alert(alertMenuLimit)
             } else {

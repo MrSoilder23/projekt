@@ -14,17 +14,14 @@ function AlertMenu({
   return (
     <div className={`alertMenu ${isActive ? 'active' : ''}`}>
         <div className='alertContainer'>
-          <div className='iconContainer'>
-            <div className='alertIcon'>{icon}</div>
-          </div>
           <div className='alertTextContainer'>
             <div className='alertHeading'><h2>{heading}</h2></div>
             <div className='alertText'><h3>{text}</h3></div>
           </div>
         </div>
         <div className='alertButtons'>
-            <Button text={"Cancel"} onClick={onClose}/>
-            <Button className={"roundedBig"} onClick={onClick} text={buttonText}/>
+            <Button className={"roundedBorder"} text={"Cancel"} onClick={onClose}/>
+            <Button className={"rounded"} onClick={onClick} text={buttonText}/>
         </div>
     </div>
   )

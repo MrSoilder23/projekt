@@ -37,7 +37,7 @@ function Document({inputId, updateFiles}) {
                 const selectedNode = range.commonAncestorContainer;
         
                 // Find the nearest ancestor span by traversing upwards
-                const spanElement = findNearestAncestorSpan(selectedNode);
+                const spanElement = findNearestAncestorHeader(selectedNode);
         
                 if (spanElement) {
                   // Get text from element
@@ -50,7 +50,7 @@ function Document({inputId, updateFiles}) {
         }
     }
 
-    const findNearestAncestorSpan = (node) => {
+    const findNearestAncestorHeader = (node) => {
         let current = node;
   
         while (current && current !== document.body) {
@@ -59,7 +59,19 @@ function Document({inputId, updateFiles}) {
           }
           current = current.parentNode;
         }
+        
+        return null;
+      }
+      const findNearestAncestorHigh = (node) => {
+        let current = node;
   
+        while (current && current !== document.body) {
+          if (current.nodeType === 1 && current.nodeName === 'SPAN' && current.classList.contains('highL')) {
+            return current;
+          }
+          current = current.parentNode;
+        }
+        
         return null;
       }
 
@@ -98,15 +110,15 @@ function Document({inputId, updateFiles}) {
 
         if(selectedText) {
             const range = select.getRangeAt(0);
+
             const selectedNode = range.commonAncestorContainer;
-            const spanElement = findNearestAncestorSpan(selectedNode);
+            const spanElement = findNearestAncestorHigh(selectedNode);
 
             if(!spanElement) {
-                alert("high1")
-                
                 range.deleteContents();
     
                 var elm = document.createElement('span');
+                elm.className = "highL"
                 elm.style = "background-color: #f2edb5;"
                 var textNode = document.createTextNode(selectedText);
                 elm.appendChild(textNode);
@@ -114,8 +126,6 @@ function Document({inputId, updateFiles}) {
                 range.insertNode(elm);
                 select.removeAllRanges();
             } else {
-                alert("high2")
-                
                 if (spanElement) {
                   // Get text from element
                   const textNode = document.createTextNode(spanElement.textContent);

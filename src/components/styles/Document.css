@@ -39,6 +39,8 @@
     display: flex;
     flex-direction: row;
 
+    user-select: none;
+
     margin-top: 4px;
 }
 .date {
@@ -48,7 +50,8 @@
 .tagContainer {
     display: flex;
     flex-direction: row;
-    
+    user-select: none;
+
     margin-top: 16px;
 }
 .tagContainer > Button {

@@ -122,6 +122,16 @@ function SplitScreenHandler({handleNames}) {
         dragOverItem.current = null;
     }
 
+    //handle closing windows views
+    function closeWindow(window) {
+        if(names[0] === window) {
+            setNames({0: names[1], 1: null})
+        } else {
+            setNames({0: names[0], 1: null})
+        }
+        setAmountOfViews(0)
+    }
+
   return (
     <div className='splitHandler' ref={parentWidth}>
         <div className='view' style={{width: `${panelWidth}%`}}>
@@ -136,7 +146,7 @@ function SplitScreenHandler({handleNames}) {
                 onDragEnd={drop}
                 >{names[0]}
             </div>
-            <button className='closeBtn'>x</button>
+            <button className='closeBtn' onClick={() => closeWindow(names[0])}>x</button>
         </div>} 
             <div className='viewContainer'>
                 {handler(names[0])}
@@ -155,7 +165,7 @@ function SplitScreenHandler({handleNames}) {
                     onDragEnd={drop}
                     >{names[1]}
                 </div>
-                <button className='closeBtn'>x</button>
+                <button className='closeBtn' onClick={() => closeWindow(names[1])}>x</button>
             </div>}
             <div className='viewContainer'>
                 {handler(names[1])}

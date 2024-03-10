@@ -3,6 +3,8 @@
     display: none;
     flex-direction: column;
 
+    z-index: 999;
+
     border: 2px solid var(--error);
 
     width: 400px;

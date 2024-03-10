@@ -85,6 +85,32 @@ function FileSystem({documentId, receiveUpdate}) {
 
     
 
+    //search
+    const [fileList, setFileList] = useState([])
+    
+    useEffect(() => {
+        setFileList(prevFileList => ({ ...prevFileList, ...file }));
+    }, [file])
+
+    function search(input) {
+        console.log(input.target.value)
+            if(input.target.value !== null && input.target.value !== undefined && input.target.value !== "") {
+                const filteredNodes = Object.fromEntries(
+                    Object.entries(fileList).filter(([key, file]) =>
+                      file.name.toLowerCase().includes(input.target.value.toLowerCase())
+                    )
+                  );
+
+                setFileList(filteredNodes)
+                
+            } else {
+                setFileList(prevFileList => ({ ...prevFileList, ...file }));
+                
+            }
+        
+
+    }
+
   return (
     <div className='fileList'>
         <div className='fileSystem' style={{width: `${panelWidth / 16}rem`}}>
@@ -92,7 +118,7 @@ function FileSystem({documentId, receiveUpdate}) {
                 <ol>
                     <div className='searchTab'>
                         <span className="material-symbols-outlined">search</span> 
-                        <input className='search'></input>
+                        <input className='search' onInput={(e) => search(e)}></input>
                     </div>
 
                     <form action='http://localhost:8000/server.php' method='post' onSubmit={(event) => createNew(event)}>
@@ -105,11 +131,11 @@ function FileSystem({documentId, receiveUpdate}) {
             <div className='fileContainer'>
                 <ol className='files'>
 
-                    {file.map((item) => {
-                        return <li className='file' draggable={true}>
+                    {Object.entries(fileList).map(([key, item]) => (
+                        <li key={key} className='file' draggable={true}>
                             <Button id={item.id} className={toggleActiveStyle(item.id)} onClick={() => {toggleActive(item.id)}} text={item.name}/>
                         </li>
-                    })}
+                    ))}
 
                     {/*
                     <button onClick={fileBtn} className={active ? "actBtn" : "unActBtn"}><li><div className='folder'/>Folder1</li></button>
